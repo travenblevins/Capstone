@@ -35,6 +35,7 @@ function App() {
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
+        <p>This is a test to see if the Client side works. Imma push the code here:</p>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
