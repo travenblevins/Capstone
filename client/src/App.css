@@ -1,8 +1,21 @@
 #root {
+  height: 100vh;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  justify-content: end;
 }
 
 .logo {
@@ -39,4 +52,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */
