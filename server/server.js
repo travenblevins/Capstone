@@ -29,38 +29,6 @@ client.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Connection error', err.stack));
 
-app.get("/api", async (req, res) => {
-  try {
-    // Query to fetch data from the 'courses' table
-    const result = await client.query("SELECT * FROM courses");  // Query for the courses table
-
-    // Formatting the response data (optional)
-    const formattedCourses = result.rows.map(course => ({
-      course_id: course.course_id,
-      name: course.name,
-      description: course.description,
-      schedule: course.schedule,
-      instructor: course.instructor,
-      credits: course.credits,
-      price: course.price
-    }));
-
-    // Send formatted data as a JSON response
-    res.json({
-      totalCourses: formattedCourses.length,  // Optional: include total count
-      courses: formattedCourses
-    });
-
-  } catch (err) {
-    console.error("Error fetching data", err);
-    res.status(500).send("Error fetching data");
-  }
-});
-
-app.get("/api/hello", (req, res) => {
-  res.send('Hello, World!');
-})
-
 
 // Endpoint for user sign-up
 app.post("/api/signup", async (req, res) => {
@@ -89,6 +57,34 @@ app.post("/api/signup", async (req, res) => {
   } catch (err) {
     console.error("Error creating user", err);
     res.status(500).json({ error: "Error creating user" });
+  }
+});
+
+app.get("/api/courses", async (req, res) => {
+  try {
+    // Query to fetch data from the 'courses' table
+    const result = await client.query("SELECT * FROM courses");  // Query for the courses table
+
+    // Formatting the response data (optional)
+    const formattedCourses = result.rows.map(course => ({
+      course_id: course.course_id,
+      name: course.name,
+      description: course.description,
+      schedule: course.schedule,
+      instructor: course.instructor,
+      credits: course.credits,
+      price: course.price
+    }));
+
+    // Send formatted data as a JSON response
+    res.json({
+      totalCourses: formattedCourses.length,  // Optional: include total count
+      courses: formattedCourses
+    });
+
+  } catch (err) {
+    console.error("Error fetching data", err);
+    res.status(500).send("Error fetching data");
   }
 });
 
