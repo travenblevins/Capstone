@@ -39,7 +39,7 @@ function App() {
   return (
     <Router>
       {/* <Navbar /> */}
-      <div className="container mx-auto mt-4">
+      <div className="">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
