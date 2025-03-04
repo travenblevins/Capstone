@@ -29,7 +29,38 @@ client.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Connection error', err.stack));
 
-app.get("/api", async (req, res) => {
+
+// Endpoint for user sign-up
+app.post("/api/signup", async (req, res) => {
+  const { firstName, email, password } = req.body;
+  
+  if (!firstName || !email || !password) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Hash password (you can use bcrypt or another hashing method)
+  const hashedPassword = bcrypt.hashSync(password, 10); // example using bcrypt
+  
+  try {
+    // Insert user into the database
+    const query = `
+      INSERT INTO users (first_name, email, password)
+      VALUES ($1, $2, $3) RETURNING id, first_name, email
+    `;
+    const values = [firstName, email, hashedPassword];
+    
+    const result = await client.query(query, values);
+
+    const newUser = result.rows[0];
+    
+    res.status(201).json({ message: "User created successfully", user: newUser });
+  } catch (err) {
+    console.error("Error creating user", err);
+    res.status(500).json({ error: "Error creating user" });
+  }
+});
+
+app.get("/api/courses", async (req, res) => {
   try {
     // Query to fetch data from the 'courses' table
     const result = await client.query("SELECT * FROM courses");  // Query for the courses table
@@ -57,9 +88,6 @@ app.get("/api", async (req, res) => {
   }
 });
 
-app.get("/api/hello", (req, res) => {
-  res.send('Hello, World!');
-})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
