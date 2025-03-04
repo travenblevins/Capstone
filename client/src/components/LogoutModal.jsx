@@ -17,7 +17,7 @@ function LogoutModal({ isOpen, onClose, onLogout }) {
             Cancel
           </button>
           <button
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-600"
             onClick={onLogout}
           >
             Logout
@@ -42,9 +42,20 @@ export default function LogoutButton() {
 
   return (
     <>
-      <button className="" onClick={() => setIsOpen(true)}>
+      <a
+        href="#"
+        className={({ isActive }) =>
+          isActive
+            ? "bg-gray-100 decoration-inherit block px-4 py-2 text-sm text-gray-700"
+            : "block px-4 py-2 text-sm text-gray-700"
+        }
+        onClick={(e) => {
+          e.preventDefault();
+          setIsOpen(true);
+        }}
+      >
         Logout
-      </button>
+      </a>
       <LogoutModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
