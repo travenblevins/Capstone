@@ -1,6 +1,7 @@
 // server/server.js
 
 const express = require("express");
+const bcrypt = require("bcryptjs"); // Import the bcrypt module
 const app = express();
 const path = require("path");
 const { Client } = require("pg"); // Import the pg module
@@ -8,6 +9,8 @@ require("dotenv").config(); // Load environment variables from .env file
 const cors = require("cors");
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/dist")));
+
+app.use(express.json());
 
 
 const PORT = process.env.PORT || 3001;
@@ -32,27 +35,31 @@ client.connect()
 
 // Endpoint for user sign-up
 app.post("/signup", async (req, res) => {
-  const { firstName, email, password } = req.body;
-  
-  if (!firstName || !email || !password) {
+  console.log(req.body); // Log the incoming request body to check its structure
+
+  // Ensure the request body is correctly destructured
+  const { firstName, lastName, email, password } = req.body;
+
+  if (!firstName || !lastName || !email || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  // Hash password (you can use bcrypt or another hashing method)
-  const hashedPassword = bcrypt.hashSync(password, 10); // example using bcrypt
-  
+  // Hash the password
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
   try {
-    // Insert user into the database
+    // Insert the user into the database, ensuring field names match the DB column names
     const query = `
-      INSERT INTO users (first_name, email, password)
-      VALUES ($1, $2, $3) RETURNING id, first_name, email
+      INSERT INTO users (first_name, last_name, email, password)
+      VALUES ($1, $2, $3, $4) RETURNING id, first_name, last_name, email
     `;
-    const values = [firstName, email, hashedPassword];
-    
+    const values = [firstName, lastName, email, hashedPassword];
+
+    // Execute the query and retrieve the result
     const result = await client.query(query, values);
 
     const newUser = result.rows[0];
-    
+
     res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (err) {
     console.error("Error creating user", err);
@@ -60,30 +67,31 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
 app.get('/login', async (req, res) => {
   const { email, password } = req.body;
-  
+
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
-  
+
   try {
     // Find user by email
     const query = "SELECT * FROM users WHERE email = $1";
     const result = await client.query(query, [email]);
     const user = result.rows[0];
-    
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    
+
     // Compare hashed password with user input
     const isPasswordValid = bcrypt.compareSync(password, user.password);
-    
+
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Incorrect password" });
     }
-    
+
     res.json({ message: "Login successful", user: user });
   } catch (err) {
     console.error("Error logging in", err);
@@ -93,21 +101,21 @@ app.get('/login', async (req, res) => {
 
 app.get('/profile', async (req, res) => {
   const { userId } = req.body;
-  
+
   if (!userId) {
     return res.status(400).json({ error: "User ID is required" });
   }
-  
+
   try {
     // Find user by ID
     const query = "SELECT * FROM users WHERE id = $1";
     const result = await client.query(query, [userId]);
     const user = result.rows[0];
-    
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    
+
     res.json({ user });
   } catch (err) {
     console.error("Error fetching user", err);
@@ -142,6 +150,27 @@ app.get("/courses", async (req, res) => {
     res.status(500).send("Error fetching data");
   }
 });
+
+app.get("/courses/:course_name", async (req, res) => {
+  const courseName = req.params.course_name;
+
+  try {
+    // Adjusted query with correct column name
+    const query = "SELECT * FROM courses WHERE course_name = $1"; // Use the correct column name
+    const result = await client.query(query, [courseName]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    res.json({ course: result.rows[0] });
+
+  } catch (err) {
+    console.error("Error fetching data", err);
+    res.status(500).send("Error fetching data");
+  }
+});
+
 
 
 app.listen(PORT, () => {
