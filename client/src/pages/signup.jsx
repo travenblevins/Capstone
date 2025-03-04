@@ -60,6 +60,21 @@ const Signup = () => {
             />
           </div>
           <div className="flex items-center border border-gray-300 rounded-md p-2">
+            <label htmlFor="lastname-input" className="mr-2">
+              👤
+            </label>
+            <input
+              required
+              type="text"
+              name="lastname"
+              id="lastname-input"
+              placeholder="Lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              className="w-full outline-none"
+            />
+          </div>
+          <div className="flex items-center border border-gray-300 rounded-md p-2">
             <label htmlFor="email-input" className="mr-2">
               @
             </label>

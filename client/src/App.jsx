@@ -4,6 +4,8 @@ import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Logout from "./pages/logout";
+import Courses from "./pages/Courses";
 
 function App() {
   const Navbar = () => (
@@ -45,6 +47,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/courses" element={<Courses />} />
         </Routes>
       </div>
     </Router>
