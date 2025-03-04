@@ -31,7 +31,7 @@ client.connect()
 
 
 // Endpoint for user sign-up
-app.post("/api/signup", async (req, res) => {
+app.post("/signup", async (req, res) => {
   const { firstName, email, password } = req.body;
   
   if (!firstName || !email || !password) {
@@ -60,7 +60,62 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-app.get("/api/courses", async (req, res) => {
+app.get('/login', async (req, res) => {
+  const { email, password } = req.body;
+  
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+  
+  try {
+    // Find user by email
+    const query = "SELECT * FROM users WHERE email = $1";
+    const result = await client.query(query, [email]);
+    const user = result.rows[0];
+    
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    // Compare hashed password with user input
+    const isPasswordValid = bcrypt.compareSync(password, user.password);
+    
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+    
+    res.json({ message: "Login successful", user: user });
+  } catch (err) {
+    console.error("Error logging in", err);
+    res.status(500).json({ error: "Error logging in" });
+  }
+});
+
+app.get('/profile', async (req, res) => {
+  const { userId } = req.body;
+  
+  if (!userId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+  
+  try {
+    // Find user by ID
+    const query = "SELECT * FROM users WHERE id = $1";
+    const result = await client.query(query, [userId]);
+    const user = result.rows[0];
+    
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    res.json({ user });
+  } catch (err) {
+    console.error("Error fetching user", err);
+    res.status(500).json({ error: "Error fetching user" });
+  }
+});
+
+app.get("/courses", async (req, res) => {
   try {
     // Query to fetch data from the 'courses' table
     const result = await client.query("SELECT * FROM courses");  // Query for the courses table
