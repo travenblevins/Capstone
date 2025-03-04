@@ -1,0 +1,37 @@
+### Test User Signup
+POST http://localhost:3001/signup
+Content-Type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Wayne",
+    "email": "john@gmail.com",
+    "password": "123484"
+}
+
+### Test User Login
+GET http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "bob@gmail.com",
+    "password": "123456"
+}
+
+### Test User Profile
+GET http://localhost:3001/profile
+Content-Type: application/json
+
+{
+    "userId": 4
+}
+
+### Test Course Page
+GET http://localhost:3001/courses
+Content-Type: application/json
+
+### Test Getting a Course
+GET http://localhost:3001/courses/Data Structures
+Content-Type: application/json
+
+### Creating an admin
