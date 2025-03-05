@@ -33,21 +33,22 @@ client.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Connection error', err.stack));
 
-const authenticateToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: "Forbidden" });
+  const authenticateToken = (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Extract token from Authorization header
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized" });
     }
-
-    req.user = user;
-    next();
-  });
-};
+  
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+  
+      req.userId = user.userId; // Assuming the JWT payload contains 'userId'
+      next();
+    });
+  };
+  
 
 // Endpoint for user sign-up
 app.post("/signup", async (req, res) => {
@@ -192,6 +193,56 @@ app.get("/courses/:course_name", authenticateToken, async (req, res) => {
     res.status(500).send("Error fetching data");
   }
 });
+
+app.post("/courses/:course_name/enroll", authenticateToken, async (req, res) => {
+  console.log("Request body:", req.body); // Log the incoming body
+  console.log("Request params:", req.params); // Log the incoming params
+  const courseName = req.params.course_name;
+  const userId = req.userId;  // Assuming the userId is retrieved from the decoded JWT
+
+  try {
+    // Check if the course exists by course_name
+    console.log(`Checking if course ${courseName} exists...`);
+    const courseQuery = "SELECT * FROM courses WHERE course_name = $1";
+    const courseResult = await client.query(courseQuery, [courseName]);
+
+    if (courseResult.rows.length === 0) {
+      console.log(`Course ${courseName} not found`);
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    // Get the course_code from the course
+    const courseCode = courseResult.rows[0].course_code;
+
+    // Check if the user is already enrolled in the course by course_code
+    console.log(`Checking if user ${userId} is already enrolled in course with code ${courseCode}`);
+    const enrollmentQuery = "SELECT * FROM user_courses WHERE user_id = $1 AND course_code = $2";
+    const enrollmentResult = await client.query(enrollmentQuery, [userId, courseCode]);
+
+    if (enrollmentResult.rows.length > 0) {
+      console.log(`User ${userId} is already enrolled in course ${courseCode}`);
+      return res.status(400).json({ error: "User is already enrolled in this course" });
+    }
+
+    // Enroll the user in the course
+    console.log(`Enrolling user ${userId} in course with code ${courseCode}`);
+    const insertQuery = "INSERT INTO user_courses (user_id, course_code) VALUES ($1, $2) RETURNING *";
+    const insertValues = [userId, courseCode];
+    const insertResult = await client.query(insertQuery, insertValues);
+
+    console.log(`User ${userId} successfully enrolled in course with code ${courseCode}`);
+    res.status(201).json({
+      message: "Successfully enrolled in course",
+      enrollment: insertResult.rows[0],
+    });
+  } catch (err) {
+    console.error("Error enrolling user", err);
+    res.status(500).json({ error: "Error enrolling user", details: err.message });
+  }
+});
+
+
+
 
 
 

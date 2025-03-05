@@ -35,6 +35,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtY
 ### Test Getting a Course
 GET http://localhost:3001/courses/Data Structures
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE4NzczMSwiZXhwIjoxNzQxMTkxMzMxfQ.bGU6QdcndN5qb0FWpp5aQwbd9Ct4tZRT5HFXYbmS_6M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE5MTk4MiwiZXhwIjoxNzQxMTk1NTgyfQ.U_W-vwJFxUMfaqsonOpeBtFDEn5b3JkHrGKjtC8FZ-8
 
-### Creating an admin
+### Test Enrolling in a Course
+POST http://localhost:3001/courses/Data Structures/enroll
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE5MDgyMywiZXhwIjoxNzQxMTk0NDIzfQ.OZwRVteLm6cnahb90TBraO0qe7In-ept5JGOhvwkYa8
