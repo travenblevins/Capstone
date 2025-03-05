@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### Test User Login
-GET http://localhost:3001/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -21,6 +21,7 @@ Content-Type: application/json
 ### Test User Profile
 GET http://localhost:3001/profile
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE4NzczMSwiZXhwIjoxNzQxMTkxMzMxfQ.bGU6QdcndN5qb0FWpp5aQwbd9Ct4tZRT5HFXYbmS_6M
 
 {
     "userId": 4
@@ -29,9 +30,11 @@ Content-Type: application/json
 ### Test Course Page
 GET http://localhost:3001/courses
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE4NzczMSwiZXhwIjoxNzQxMTkxMzMxfQ.bGU6QdcndN5qb0FWpp5aQwbd9Ct4tZRT5HFXYbmS_6M
 
 ### Test Getting a Course
 GET http://localhost:3001/courses/Data Structures
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE4NzczMSwiZXhwIjoxNzQxMTkxMzMxfQ.bGU6QdcndN5qb0FWpp5aQwbd9Ct4tZRT5HFXYbmS_6M
 
 ### Creating an admin

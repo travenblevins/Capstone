@@ -3,15 +3,16 @@
 const express = require("express");
 const bcrypt = require("bcryptjs"); // Import the bcrypt module
 const app = express();
+const jwt = require("jsonwebtoken");
 const path = require("path");
 const { Client } = require("pg"); // Import the pg module
 require("dotenv").config(); // Load environment variables from .env file
+const secretKey = process.env.SECRET_KEY || "secret_key";
 const cors = require("cors");
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/dist")));
-
 app.use(express.json());
-
+app.use(cors());
 
 const PORT = process.env.PORT || 3001;
 
@@ -32,6 +33,21 @@ client.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Connection error', err.stack));
 
+const authenticateToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+
+    req.user = user;
+    next();
+  });
+};
 
 // Endpoint for user sign-up
 app.post("/signup", async (req, res) => {
@@ -68,7 +84,7 @@ app.post("/signup", async (req, res) => {
 });
 
 
-app.get('/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -92,14 +108,20 @@ app.get('/login', async (req, res) => {
       return res.status(401).json({ error: "Incorrect password" });
     }
 
-    res.json({ message: "Login successful", user: user });
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      secretKey,
+      { expiresIn: "1h" } // Token expires in 1 hour
+    );
+
+    res.json({ message: "Login successful", token: token });
   } catch (err) {
     console.error("Error logging in", err);
     res.status(500).json({ error: "Error logging in" });
   }
 });
 
-app.get('/profile', async (req, res) => {
+app.get('/profile', authenticateToken, async (req, res) => {
   const { userId } = req.body;
 
   if (!userId) {
@@ -123,7 +145,7 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-app.get("/courses", async (req, res) => {
+app.get("/courses", authenticateToken, async (req, res) => {
   try {
     // Query to fetch data from the 'courses' table
     const result = await client.query("SELECT * FROM courses");  // Query for the courses table
@@ -151,7 +173,7 @@ app.get("/courses", async (req, res) => {
   }
 });
 
-app.get("/courses/:course_name", async (req, res) => {
+app.get("/courses/:course_name", authenticateToken, async (req, res) => {
   const courseName = req.params.course_name;
 
   try {
