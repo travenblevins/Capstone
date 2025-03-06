@@ -18,26 +18,42 @@ Content-Type: application/json
     "password": "123456"
 }
 
+### Test admin login
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "123456783"
+}
+
 ### Test User Profile
 GET http://localhost:3001/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE4NzczMSwiZXhwIjoxNzQxMTkxMzMxfQ.bGU6QdcndN5qb0FWpp5aQwbd9Ct4tZRT5HFXYbmS_6M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTg0OSwiZXhwIjoxNzQxMjc5NDQ5fQ.CLt-3C4Mp5CKrZsqgRs6zY074V32QtKcSkYfACeYv-s
 
-{
-    "userId": 4
-}
 
 ### Test Course Page
 GET http://localhost:3001/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE4NzczMSwiZXhwIjoxNzQxMTkxMzMxfQ.bGU6QdcndN5qb0FWpp5aQwbd9Ct4tZRT5HFXYbmS_6M
+Authorization: Bearer 
 
 ### Test Getting a Course
 GET http://localhost:3001/courses/Data Structures
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE5MTk4MiwiZXhwIjoxNzQxMTk1NTgyfQ.U_W-vwJFxUMfaqsonOpeBtFDEn5b3JkHrGKjtC8FZ-8
+Authorization: Bearer 
 
 ### Test Enrolling in a Course
 POST http://localhost:3001/courses/Data Structures/enroll
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTE5MDgyMywiZXhwIjoxNzQxMTk0NDIzfQ.OZwRVteLm6cnahb90TBraO0qe7In-ept5JGOhvwkYa8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTg0OSwiZXhwIjoxNzQxMjc5NDQ5fQ.CLt-3C4Mp5CKrZsqgRs6zY074V32QtKcSkYfACeYv-s
+
+### Test Unenrolling in a Course
+POST http://localhost:3001/courses/Data Structures/unenroll
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTY4MywiZXhwIjoxNzQxMjc5MjgzfQ.QcgjaI90F4xmhyVTDeba-AJIhQ9Oxj0kYq-Gft5wSXQ
+
+### Test admin page
+GET http://localhost:3001/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQxMjc4MTQzLCJleHAiOjE3NDEyODE3NDN9.Kg31dawgDLQ7THdxeaW7rRSdIWaL58FgmFuKuzg3pSU
