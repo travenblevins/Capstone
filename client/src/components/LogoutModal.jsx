@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LogoutModal({ isOpen, onClose, onLogout }) {
   if (!isOpen) return null;
@@ -35,6 +35,7 @@ export default function LogoutButton() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    // localStorage.removeItem("token");
     console.log("User logged out");
     navigate("/login");
     setIsOpen(false);
@@ -42,7 +43,7 @@ export default function LogoutButton() {
 
   return (
     <>
-      <a
+      <Link
         href="#"
         className={({ isActive }) =>
           isActive
@@ -55,7 +56,7 @@ export default function LogoutButton() {
         }}
       >
         Logout
-      </a>
+      </Link>
       <LogoutModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

@@ -6,29 +6,25 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
-    repeatPassword: "", // Include repeatPassword in the state
+    repeatPassword: "",
   });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Validate password format using regex
   const validateForm = (password) => {
     const regex =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-+.]).{6,20}$/;
     return regex.test(password);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { password, repeatPassword } = formData;
 
-    // Validate password format
     if (!validateForm(password)) {
       alert(
         "Password needs to be: 6-20 characters long, have at least 1 special character, 1 uppercase, 1 lowercase, and 1 number."
@@ -36,7 +32,6 @@ const Signup = () => {
       return;
     }
 
-    // Validate that password and repeat password match
     if (password !== repeatPassword) {
       alert("Password and Repeat Password are not the same");
       return;
