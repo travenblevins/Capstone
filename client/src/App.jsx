@@ -1,54 +1,46 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Logout from "./pages/logout";
 import Courses from "./pages/Courses";
+import { useContext } from "react";
+import AuthContext, { AuthProvider } from "./context/AuthContext";
 
 function App() {
-  const Navbar = () => (
-    <nav className="bg-gray-800 p-4">
-      <ul className="flex space-x-6 text-white">
-        <li>
-          <Link to="/" className="hover:bg-gray-700 px-3 py-2 rounded-md">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/signup" className="hover:bg-gray-700 px-3 py-2 rounded-md">
-            Signup
-          </Link>
-        </li>
-        <li>
-          <Link to="/login" className="hover:bg-gray-700 px-3 py-2 rounded-md">
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/profile"
-            className="hover:bg-gray-700 px-3 py-2 rounded-md"
-          >
-            Profile
-          </Link>
-        </li>
-      </ul>
-    </nav>
-  );
+  // Consume the user context
+  const { user } = useContext(AuthContext);
+
+  // ProtectedRoute component uses the user context
+  const ProtectedRoute = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
+  };
 
   return (
     <Router>
-      {/* <Navbar /> */}
       <div className="">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/logout" element={<Logout />} />
+          {/* <Route path="/logout" element={<Logout />} /> */}
           <Route path="/courses" element={<Courses />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>

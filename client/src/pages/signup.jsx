@@ -20,14 +20,14 @@ const Signup = () => {
     return regex.test(password);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { password, repeatPassword } = formData;
 
     if (!validateForm(password)) {
       alert(
-        "Password needs to be: 6-20 Characters Long, Have at Least 1 Special Character, 1 Uppercase, 1 Lowercase, and 1 Number"
+        "Password needs to be: 6-20 characters long, have at least 1 special character, 1 uppercase, 1 lowercase, and 1 number."
       );
       return;
     }
@@ -37,7 +37,26 @@ const Signup = () => {
       return;
     }
 
-    console.log("Signup successful", formData);
+    try {
+      const response = await fetch("http://localhost:3001/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Signup successful! Please log in.");
+        window.location.href = "/login";
+      } else {
+        alert(data.error);
+      }
+    } catch (error) {
+      console.error("Signup error", error);
+    }
   };
 
   return (
@@ -54,7 +73,7 @@ const Signup = () => {
               type="text"
               name="firstName"
               id="firstname-input"
-              placeholder="Firstname"
+              placeholder="First Name"
               value={formData.firstName}
               onChange={handleChange}
               className="w-full outline-none"
@@ -67,10 +86,10 @@ const Signup = () => {
             <input
               required
               type="text"
-              name="lastname"
+              name="lastName"
               id="lastname-input"
-              placeholder="Lastname"
-              value={formData.lastname}
+              placeholder="Last Name"
+              value={formData.lastName}
               onChange={handleChange}
               className="w-full outline-none"
             />
