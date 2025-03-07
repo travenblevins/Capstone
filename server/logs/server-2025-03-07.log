@@ -49,3 +49,7 @@
 {"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:15:44:05 +0000] \"GET /admin HTTP/1.1\" 200 8622 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T15:44:05.660Z"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:15:44:14 +0000] \"GET /admin HTTP/1.1\" 200 8622 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T15:44:14.910Z"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:15:44:55 +0000] \"GET /admin HTTP/1.1\" 200 9349 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T15:44:55.571Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:16:18:15 +0000] \"GET /profile HTTP/1.1\" 403 21 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T16:18:15.338Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:16:18:17 +0000] \"GET /admin HTTP/1.1\" 200 9349 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T16:18:17.825Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:16:18:23 +0000] \"POST /login HTTP/1.1\" 200 216 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T16:18:23.282Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2025:16:18:48 +0000] \"GET /profile HTTP/1.1\" 200 491 \"-\" \"vscode-restclient\"","timestamp":"2025-03-07T16:18:48.493Z"}

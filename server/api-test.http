@@ -32,7 +32,7 @@ Content-type: application/json
 ### Test admin page
 GET http://localhost:3001/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTM2MjA5MiwiZXhwIjoxNzQxMzY1NjkyfQ.tBEwUviktyTqWSz9wqncECiONMGqWCQRLwd8IlGa-p0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTM2NDA0MCwiZXhwIjoxNzQxMzY3NjQwfQ.Ib3XAeZ1tt9eyuMUtca2-1ZLEy_a9TBYtiGHx0N84rQ
 
 {
     "email": "admin@example.com",
@@ -43,7 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test User Profile
 GET http://localhost:3001/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTg0OSwiZXhwIjoxNzQxMjc5NDQ5fQ.CLt-3C4Mp5CKrZsqgRs6zY074V32QtKcSkYfACeYv-s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM2NDMwMywiZXhwIjoxNzQxMzY3OTAzfQ.o62rUH3sh1X0D5K8YCeWSyaZwChYJnZmI4vheTBV2jc
 
 
 ### Test Course Page
