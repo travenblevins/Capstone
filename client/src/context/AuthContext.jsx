@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 
 const AuthContext = createContext();
 
@@ -30,8 +30,9 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setToken(data.token);
-        localStorage.setItem("token", data.token);
+        const { token } = data;
+        setToken(token);
+        localStorage.setItem("token", token);
         localStorage.setItem("email", email);
         setUser({ email });
       } else {
@@ -50,11 +51,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("email");
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      user,
+      token,
+      login,
+      logout,
+    }),
+    [user, token]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;

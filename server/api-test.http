@@ -30,7 +30,7 @@ Content-Type: application/json
 ### Test User Profile
 GET http://localhost:3001/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTg0OSwiZXhwIjoxNzQxMjc5NDQ5fQ.CLt-3C4Mp5CKrZsqgRs6zY074V32QtKcSkYfACeYv-s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI5OTI1NywiZXhwIjoxNzQxMzAyODU3fQ.e-Mo7BlV2f0b3xq8owPeEgzQnSME0DEdtsDuyv9dPZs
 
 
 ### Test Course Page
