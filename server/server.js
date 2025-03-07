@@ -89,7 +89,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 
-// Endpoint for user sign-upf
+// Endpoint for user sign-up
 app.post("/signup", async (req, res) => {
   console.log(req.body); // Log the incoming request body to check its structure
 
@@ -123,6 +123,50 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// // Endpoint for user sign-up
+// app.post("/signup/admin", async (req, res) => {
+//   console.log(req.body); // Log the incoming request body to check its structure
+
+//   // Ensure the request body is correctly destructured
+//   const { firstName, lastName, email, password, admin } = req.body;
+
+//   if (!firstName || !lastName || !email || !password || !admin) {
+//     return res.status(400).json({ error: "All fields are required" });
+//   }
+
+//   // Hash the password
+//   const hashedPassword = bcrypt.hashSync(password, 10);
+
+//   try {
+//     await client.query("BEGIN"); // Start transaction
+
+//     // Insert the user into the users table and return user details
+//     const userResult = await client.query(
+//       `INSERT INTO users (first_name, last_name, email, password, admin)
+//        VALUES ($1, $2, $3, $4, $5)
+//        RETURNING id, first_name, last_name, email, admin`,
+//       [firstName, lastName, email, hashedPassword, admin]
+//     );
+
+//     const newUser = userResult.rows[0]; // Store the newly created user
+
+//     // Insert the user into the administrators table
+//     await client.query(
+//       `INSERT INTO administrators (first_name, last_name, email, password, is_super_admin)
+//        VALUES ($1, $2, $3, $4, $5)`,
+//       [newUser.first_name, newUser.last_name, newUser.email, hashedPassword, admin]
+//     );
+
+//     await client.query("COMMIT"); // Commit transaction
+
+//     res.status(201).json({ message: "User created successfully", user: newUser });
+//   } catch (err) {
+//     await client.query("ROLLBACK"); // Rollback transaction if error occurs
+//     console.error("Error creating user", err);
+//     res.status(500).json({ error: "Error creating user" });
+//   }
+// });
+
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -150,25 +194,21 @@ app.post('/login', async (req, res) => {
     }
 
     const admin = user.admin;
+    console.log("Admin:", admin);
 
-    // Check if user is an admin
-    if (admin === true) {
-      const token = jwt.sign(
-        { userId: user.id, email: user.email },
-        secretKey,
-        { expiresIn: "1h" } // Token expires in 1 hour
-      );
+    let isAdmin
 
-      res.json({ message: "Login successful", token: token, admin: true });
+    if (user.admin === 'yes') {
+      isAdmin = true;
     }
 
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.id, email: user.email, admin: isAdmin },  // Ensure `admin` is always included
       secretKey,
       { expiresIn: "1h" } // Token expires in 1 hour
     );
 
-    res.json({ message: "Login successful", token: token, admin: admin });
+    res.json({ message: "Login successful", token: token, admin: isAdmin });
   } catch (err) {
     console.error("Error logging in", err);
     res.status(500).json({ error: "Error logging in" });
@@ -211,8 +251,6 @@ app.get('/profile', authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Error fetching user profile", details: err.message });
   }
 });
-
-
 
 
 app.get("/courses", authenticateToken, async (req, res) => {
@@ -353,37 +391,58 @@ app.post("/courses/:course_name/unenroll", authenticateToken, async (req, res) =
 })
 
 app.get("/admin", authenticateToken, async (req, res) => {
-  const token = jwt.decode(req.headers.authorization.split(" ")[1]);
-  if (token.admin === true) {
-    try {
-      // Query to fetch data from the 'courses' table
-      const result = await client.query("SELECT * FROM courses");  // Query for the courses table
+  try {
+    // Use jwt.verify() to properly verify and decode the token
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
 
-      // Formatting the response data (optional)
-      const formattedCourses = result.rows.map(course => ({
-        course_id: course.course_id,
-        name: course.name,
-        description: course.description,
-        schedule: course.schedule,
-        instructor: course.instructor,
-        credits: course.credits,
-        price: course.price
-      }));
+    if (decoded.admin === true) {
+      try {
+        // Query to fetch data from the 'courses' table
+        const result = await client.query("SELECT * FROM courses");
+        const users = await client.query("SELECT * FROM users");
 
-      // Send formatted data as a JSON response
-      res.json({
-        totalCourses: formattedCourses.length,  // Optional: include total count
-        courses: formattedCourses
-      });
+        // Formatting the response data (optional)
+        const formattedCourses = result.rows.map(course => ({
+          course_id: course.course_id,
+          name: course.name,
+          description: course.description,
+          schedule: course.schedule,
+          instructor: course.instructor,
+          credits: course.credits,
+          price: course.price
+        }));
 
-    } catch (err) {
-      console.error("Error fetching data", err);
-      res.status(500).send("Error fetching data");
+        const formattedUsers = users.rows.map(user => ({
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          admin: user.admin
+        }));
+
+        // Send formatted data as a JSON response
+        res.json({
+          totalCourses: formattedCourses.length,
+          courses: formattedCourses,
+          totalUsers: formattedUsers.length,
+          users: formattedUsers
+        });
+
+      } catch (err) {
+        console.error("Error fetching data", err);
+        res.status(500).send("Error fetching data");
+      }
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
     }
-  } else {
-    res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+  } catch (err) {
+    console.error("Error verifying token", err);
+    res.status(401).json({ error: "Invalid token" });
   }
-})
+});
+
+
 
 
 app.listen(PORT, () => {

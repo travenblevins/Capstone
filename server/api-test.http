@@ -1,12 +1,13 @@
+
 ### Test User Signup
 POST http://localhost:3001/signup
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Wayne",
-    "email": "john@gmail.com",
-    "password": "123484"
+    "firstName": "Bob",
+    "lastName": "Smith",
+    "email": "bob232@gmail.com",
+    "password": "123456"
 }
 
 ### Test User Login
@@ -18,14 +19,26 @@ Content-Type: application/json
     "password": "123456"
 }
 
+
 ### Test admin login
 POST http://localhost:3001/login
-Content-Type: application/json
+Content-type: application/json
 
 {
     "email": "admin@example.com",
-    "password": "123456783"
+    "password": "1234567"
 }
+
+### Test admin page
+GET http://localhost:3001/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTM2MjA5MiwiZXhwIjoxNzQxMzY1NjkyfQ.tBEwUviktyTqWSz9wqncECiONMGqWCQRLwd8IlGa-p0
+
+{
+    "email": "admin@example.com",
+    "password": "1234567"
+}
+
 
 ### Test User Profile
 GET http://localhost:3001/profile
