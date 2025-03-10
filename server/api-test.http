@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
     "email": "admin@example.com",
-    "password": "123456783"
+    "password": "1234567"
 }
 
 ### Test User Profile
@@ -56,4 +56,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtY
 ### Test admin page
 GET http://localhost:3001/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQxMjc4MTQzLCJleHAiOjE3NDEyODE3NDN9.Kg31dawgDLQ7THdxeaW7rRSdIWaL58FgmFuKuzg3pSU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTYxNTcxOSwiZXhwIjoxNzQxNjE5MzE5fQ.EjHZwKe8AQo402K2jyWyOLRBkJ4DNZ_aYXW_HrLHVQY
