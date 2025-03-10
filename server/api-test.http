@@ -35,7 +35,7 @@ Authorization: Bearer
 ### Test Course Page
 GET http://localhost:3001/courses
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTYyNjg4MCwiZXhwIjoxNzQxNjMwNDgwfQ.knUD4DwlFlD7u2Qwp62FkFV9PjlryUJ5wIFChXF-r6g
 
 ### Test Getting a Course
 GET http://localhost:3001/courses/Data Structures

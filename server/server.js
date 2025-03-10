@@ -259,13 +259,12 @@ app.get("/courses", authenticateToken, async (req, res) => {
 
     // Formatting the response data (optional)
     const formattedCourses = result.rows.map(course => ({
-      course_id: course.course_id,
-      name: course.name,
+      course_id: course.course_code,
+      name: course.course_name,
       description: course.description,
       schedule: course.schedule,
-      instructor: course.instructor,
-      credits: course.credits,
-      price: course.price
+      room: course.room,
+      fee: course.fee
     }));
 
     // Send formatted data as a JSON response
