@@ -30,8 +30,7 @@ Content-Type: application/json
 ### Test User Profile
 GET http://localhost:3001/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI5OTI1NywiZXhwIjoxNzQxMzAyODU3fQ.e-Mo7BlV2f0b3xq8owPeEgzQnSME0DEdtsDuyv9dPZs
-
+Authorization: Bearer 
 
 ### Test Course Page
 GET http://localhost:3001/courses
@@ -46,14 +45,14 @@ Authorization: Bearer
 ### Test Enrolling in a Course
 POST http://localhost:3001/courses/Data Structures/enroll
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTg0OSwiZXhwIjoxNzQxMjc5NDQ5fQ.CLt-3C4Mp5CKrZsqgRs6zY074V32QtKcSkYfACeYv-s
+Authorization: Bearer 
 
 ### Test Unenrolling in a Course
 POST http://localhost:3001/courses/Data Structures/unenroll
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI3NTY4MywiZXhwIjoxNzQxMjc5MjgzfQ.QcgjaI90F4xmhyVTDeba-AJIhQ9Oxj0kYq-Gft5wSXQ
+Authorization: Bearer 
 
 ### Test admin page
 GET http://localhost:3001/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTYxNTcxOSwiZXhwIjoxNzQxNjE5MzE5fQ.EjHZwKe8AQo402K2jyWyOLRBkJ4DNZ_aYXW_HrLHVQY
+Authorization: Bearer 
