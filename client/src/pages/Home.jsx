@@ -1,17 +1,14 @@
-import { useContext } from "react";
 import Navbar from "../components/Navbar";
+import Dashboard from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import AuthContext from "../context/AuthContext";
 
 const Home = () => {
-  const { user } = useContext(AuthContext);
-
   return (
     <div>
-      <Navbar />
-      <div>
-        <h2>Welcome, {user?.email}</h2>
-        <h2>Available Courses</h2>
-      </div>
+      <Dashboard>
+        <h1>Test</h1>
+      </Dashboard>
     </div>
   );
 };

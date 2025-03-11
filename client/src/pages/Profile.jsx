@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import Dashboard from "../components/Sidebar";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -35,30 +36,31 @@ const Profile = () => {
 
   return (
     <div>
-      <Navbar />
-      <h2>Profile</h2>
-      {user ? (
-        <div>
-          <p>
-            <strong>Name:</strong> {user.first_name} {user.last_name}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          <h3>Enrolled Courses</h3>
-          <ul>
-            {enrolledCourses.length > 0 ? (
-              enrolledCourses.map((course) => (
-                <li key={course.course_code}>{course.course_name}</li>
-              ))
-            ) : (
-              <p>No enrolled courses</p>
-            )}
-          </ul>
-        </div>
-      ) : (
-        <p>Loading profile...</p>
-      )}
+      <Dashboard>
+        <h2>Profile</h2>
+        {user ? (
+          <div>
+            <p>
+              <strong>Name:</strong> {user.first_name} {user.last_name}
+            </p>
+            <p>
+              <strong>Email:</strong> {user.email}
+            </p>
+            <h3>Enrolled Courses</h3>
+            <ul>
+              {enrolledCourses.length > 0 ? (
+                enrolledCourses.map((course) => (
+                  <li key={course.course_code}>{course.course_name}</li>
+                ))
+              ) : (
+                <p>No enrolled courses</p>
+              )}
+            </ul>
+          </div>
+        ) : (
+          <p>Loading profile...</p>
+        )}
+      </Dashboard>
     </div>
   );
 };
