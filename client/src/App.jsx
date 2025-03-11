@@ -5,12 +5,12 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Signup from "./pages/signup";
-import Login from "./pages/login";
+import Signup from "./pages/Signup";
+
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import Logout from "./pages/logout";
 import Courses from "./pages/Courses";
+import Login from "./pages/login";
 import { useContext } from "react";
 import AuthContext, { AuthProvider } from "./context/AuthContext";
 
@@ -38,7 +38,6 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
-          {/* <Route path="/logout" element={<Logout />} /> */}
           <Route path="/courses" element={<Courses />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>

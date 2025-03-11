@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import Dashboard from "../components/Sidebar";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -54,22 +55,24 @@ const Courses = () => {
 
   return (
     <div>
-      <Navbar />
-      <h2>Courses</h2>
-      <ul>
-        {courses.length > 0 ? (
-          courses.map((course) => (
-            <li key={course.course_id}>
-              {course.description} - {course.credits} credits, {course.schedule}
-              {/* <button onClick={() => enrollInCourse(course.course_id)}>
+      <Dashboard>
+        <h2>Courses</h2>
+        <ul>
+          {courses.length > 0 ? (
+            courses.map((course) => (
+              <li key={course.course_id}>
+                {course.description} - {course.credits} credits,{" "}
+                {course.schedule}
+                {/* <button onClick={() => enrollInCourse(course.course_id)}>
                 Enroll
               </button> */}
-            </li>
-          ))
-        ) : (
-          <p>No courses available</p>
-        )}
-      </ul>
+              </li>
+            ))
+          ) : (
+            <p>Loading Courses...</p>
+          )}
+        </ul>
+      </Dashboard>
     </div>
   );
 };
