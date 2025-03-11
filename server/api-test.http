@@ -30,12 +30,12 @@ Content-Type: application/json
 ### Test User Profile
 GET http://localhost:3001/profile
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJlbWFpbCI6Im1pY2hhZWxAZ21haWwuY29tIiwiaWF0IjoxNzQxNzA2NzkyLCJleHAiOjE3NDE3MTAzOTJ9.Az7JlmFAiGkdVVzxFOsrTa_zhQl1bQ5XjLeEOlCHQaw
 
 ### Test Course Page
 GET http://localhost:3001/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTYyNjg4MCwiZXhwIjoxNzQxNjMwNDgwfQ.knUD4DwlFlD7u2Qwp62FkFV9PjlryUJ5wIFChXF-r6g
+Authorization: Bearer 
 
 ### Test Getting a Course
 GET http://localhost:3001/courses/Data Structures
@@ -56,3 +56,71 @@ Authorization: Bearer
 GET http://localhost:3001/admin
 Content-Type: application/json
 Authorization: Bearer 
+
+### Test deleting user
+DELETE http://localhost:3001/admin/users/12
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test admin creating a user
+POST http://localhost:3001/admin/users
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "firstName": "Michael",
+    "lastName": "Scott",
+    "email": "michael@gmail.com",
+    "password": "123456",
+    "admin": "no"
+}
+
+### Test admin editing a user
+PUT http://localhost:3001/admin/users/24
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTcwMzg5MiwiZXhwIjoxNzQxNzA3NDkyfQ.WAptga-G8FKAaHWP7yumOXfcYe58GSLQiaODh2C_-_I
+
+{
+    "firstName": "Michael",
+    "lastName": "Scotty",
+    "email": "michael@gmail.com",
+    "password": "123456",
+    "admin": "no"
+}
+
+### Test User Login
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "michael@gmail.com",
+    "password": "123456"
+}
+
+
+### Test user updating profile
+PUT http://localhost:3001/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJlbWFpbCI6Im1pY2hhZWxAZ21haWwuY29tIiwiaWF0IjoxNzQxNzA2NzkyLCJleHAiOjE3NDE3MTAzOTJ9.Az7JlmFAiGkdVVzxFOsrTa_zhQl1bQ5XjLeEOlCHQaw
+
+{
+    "firstName": "Michael",
+    "lastName": "Scott",
+    "email": "michael1@gmail.com"
+}
+
+### Test creating a course
+POST http://localhost:3001/admin/courses
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTcwODEyMSwiZXhwIjoxNzQxNzExNzIxfQ.2zpMxJbd_7SbmuAHVOP5Wo4wUeGV8T1trYoy2YuSrJg
+
+{
+    "courseCode": "BIO-101",
+    "courseName": "Intro to Evolutionary Science",
+    "description": "This course is an introduction to the principles of evolutionary science.",
+    "schedule": "MWF 10:00-11:00",
+    "room": "Lab-3934",
+    "capacity": 30,
+    "credits": 3,
+    "fee": 100.00
+}

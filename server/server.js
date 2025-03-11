@@ -251,6 +251,26 @@ app.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+app.put('/profile', authenticateToken, async (req, res) => {
+  const userId = req.userId; // Get user ID from the token
+  const { firstName, lastName, email } = req.body;
+  try {
+    const query = `
+      UPDATE users
+      SET first_name = $1, last_name = $2, email = $3
+      WHERE id = $4 RETURNING id, first_name, last_name, email
+    `;
+    const values = [firstName, lastName, email, userId];
+    const result = await client.query(query, values);
+    const updatedUser = result.rows[0];
+    res.json({ message: "User updated successfully", user: updatedUser });
+  } catch (err) {
+    console.error("Error updating user", err);
+    res.status(500).json({ error: "Error updating user" });
+  }
+
+});
+
 
 app.get("/courses", authenticateToken, async (req, res) => {
   try {
@@ -399,16 +419,16 @@ app.get("/admin", authenticateToken, async (req, res) => {
         // Query to fetch data from the 'courses' table
         const result = await client.query("SELECT * FROM courses");
         const users = await client.query("SELECT * FROM users");
+        const userTable = await client.query('SELECT * FROM user_courses')
 
         // Formatting the response data (optional)
         const formattedCourses = result.rows.map(course => ({
-          course_id: course.course_id,
-          name: course.name,
+          course_id: course.course_code,
+          name: course.course_name,
           description: course.description,
           schedule: course.schedule,
-          instructor: course.instructor,
-          credits: course.credits,
-          price: course.price
+          room: course.room,
+          fee: course.fee
         }));
 
         const formattedUsers = users.rows.map(user => ({
@@ -419,12 +439,19 @@ app.get("/admin", authenticateToken, async (req, res) => {
           admin: user.admin
         }));
 
+        const formattedUserTable = userTable.rows.map(user => ({
+          user_id: user.user_id,
+          course_code: user.course_code
+        }))
+
         // Send formatted data as a JSON response
         res.json({
           totalCourses: formattedCourses.length,
           courses: formattedCourses,
           totalUsers: formattedUsers.length,
-          users: formattedUsers
+          users: formattedUsers,
+          totalCourseUsers: formattedUserTable.length,
+          userTable: formattedUserTable
         });
 
       } catch (err) {
@@ -440,6 +467,173 @@ app.get("/admin", authenticateToken, async (req, res) => {
   }
 });
 
+
+app.delete('/admin/users/:user_id', authenticateToken, async (req, res) => {
+  const userId = req.params.user_id;
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+
+    if (decoded.admin === true) {
+      const query = "DELETE FROM users WHERE id = $1";
+      await client.query(query, [userId]);
+      res.json({ message: "User deleted successfully" });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+  } catch (err) {
+    console.error("Error verifying token", err);
+    res.status(401).json({ error: "Invalid token" });
+  }
+});
+
+app.post('/admin/users', authenticateToken, async (req, res) => {
+  const { firstName, lastName, email, password, admin } = req.body;
+
+  if (!firstName || !lastName || !email || !password || !admin) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = `
+      INSERT INTO users (first_name, last_name, email, password, admin)
+      VALUES ($1, $2, $3, $4, $5) RETURNING id, first_name, last_name, email, admin
+    `;
+      const values = [firstName, lastName, email, hashedPassword, admin];
+      const result = await client.query(query, values);
+      const newUser = result.rows[0];
+
+      res.status(201).json({ message: "User created successfully", user: newUser });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+
+  } catch (err) {
+    console.error("Error creating user", err);
+    res.status(500).json({ error: "Error creating user" });
+  }
+});
+
+app.put('/admin/users/:user_id', authenticateToken, async (req, res) => {
+
+  const userId = req.params.user_id;
+  const { firstName, lastName, email, password, admin } = req.body;
+
+  if (!firstName || !lastName || !email || !password || !admin) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = `
+      UPDATE users
+      SET first_name = $1, last_name = $2, email = $3, password = $4, admin = $5
+      WHERE id = $6 RETURNING id, first_name, last_name, email, admin
+    `;
+      const values = [firstName, lastName, email, hashedPassword, admin, userId];
+      const result = await client.query(query, values);
+      const updatedUser = result.rows[0];
+
+      res.json({ message: "User updated successfully", user: updatedUser });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+
+  } catch (err) {
+    console.error("Error updating user", err);
+    res.status(500).json({ error: "Error updating user" });
+  }
+});
+
+app.delete('/admin/courses/:course_code', authenticateToken, async (req, res) => {
+  const courseCode = req.params.course_code;
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+
+    if(decoded.admin === true) {
+      const query = "DELETE FROM courses WHERE course_code = $1";
+      await client.query(query, [courseCode]);
+      res.json({ message: "Course deleted successfully" });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+  } catch (err) {
+    console.error("Error verifying token", err);
+    res.status(401).json({ error: "Invalid token" });
+  }
+});
+
+app.post('/admin/courses', authenticateToken, async (req, res) => {
+  const { courseCode, courseName, description, schedule, room, capacity, credits, fee } = req.body;
+
+  if (!courseCode || !courseName || !description || !schedule || !room || !capacity || !credits || !fee) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = `
+      INSERT INTO courses (course_code, course_name, description, schedule, room, capacity, credits, fee)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING course_code, course_name, description, schedule, room, capacity, credits, fee
+    `;
+      const values = [courseCode, courseName, description, schedule, room, capacity, credits, fee];
+      const result = await client.query(query, values);
+      const newCourse = result.rows[0];
+
+      res.status(201).json({ message: "Course created successfully", course: newCourse });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+
+  } catch (err) {
+    console.error("Error creating course", err);
+    res.status(500).json({ error: "Error creating course" });
+  }
+});
+
+app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
+  const courseCode = req.params.course_code;
+  const { courseName, description, schedule, room, fee } = req.body;
+
+  if(!courseName || !description || !schedule || !room || !fee) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = `
+      UPDATE courses
+      SET course_name = $1, description = $2, schedule = $3, room = $4, fee = $5
+      WHERE course_code = $6 RETURNING course_code, course_name, description, schedule, room, fee
+    `;
+      const values = [courseName, description, schedule, room, fee, courseCode];
+      const result = await client.query(query, values);
+      const updatedCourse = result.rows[0];
+
+      res.json({ message: "Course updated successfully", course: updatedCourse });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+  } catch (err) {
+    console.error("Error updating course", err);
+    res.status(500).json({ error: "Error updating course" });
+  }
+
+});
 
 
 
