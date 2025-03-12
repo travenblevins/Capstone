@@ -20,19 +20,29 @@ app.use(cors());
 const PORT = process.env.PORT || 3001;
 
 const logTransport = new winston.transports.DailyRotateFile({
-  filename: 'logs/server-%DATE%.log',  // Log files will be saved in 'logs' folder with a date suffix
-  datePattern: 'YYYY-MM-DD',           // Rotate logs daily
-  zippedArchive: true,                 // Compress rotated logs to save space
-  maxSize: '20m',                      // Rotate log after it reaches 20 MB
-  maxFiles: '14d'                      // Keep log files for the past 14 days
+  filename: 'logs/server-%DATE%.log',
+  datePattern: 'YYYY-MM-DD',
+  zippedArchive: true,
+  maxSize: '20m',
+  maxFiles: '14d',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(({ timestamp, level, message }) => {
+      return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+    })
+  )
 });
+
 
 // Set up logging using Winston
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
-    winston.format.json()
+    winston.format.printf(({ timestamp, level, message }) => {
+      return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+    })
+
   ),
   transports: [
     logTransport,
