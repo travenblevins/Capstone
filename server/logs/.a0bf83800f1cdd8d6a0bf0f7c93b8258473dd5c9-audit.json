@@ -21,9 +21,15 @@
             "hash": "4566a36167cc3f05c2da0ab5e3e137708ee48eeaab3afe572f55ac119a2f8c8b"
         },
         {
+<<<<<<< HEAD
             "date": 1741706563125,
             "name": "logs/server-2025-03-11.log",
             "hash": "1dfa737864ad6809870a7de164fc6efd54fdf2e2fd19fac01cf5327867c1434e"
+=======
+            "date": 1741793783934,
+            "name": "logs/server-2025-03-12.log",
+            "hash": "c79966ecac7b4a16d3c5d2eda6cd8ec185f2b07441825e0d79d7407b73957e33"
+>>>>>>> master
         }
     ],
     "hashType": "sha256"
