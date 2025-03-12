@@ -63,7 +63,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal Server Error" })
 })
 
-// Set up PostgreSQL client using environment variables
+
+
 const client = new Client({
   user: process.env.PG_USER,         // Your PostgreSQL username
   host: process.env.PG_HOST,         // Usually 'localhost' or an IP address
@@ -74,6 +75,7 @@ const client = new Client({
     rejectUnauthorized: false
   }
 });
+
 
 
 // Connect to PostgreSQL
