@@ -28,12 +28,14 @@ const Navbar = ({ toggleSidebar }) => {
               <img
                 src="https://flowbite.com/docs/images/logo.svg"
                 className="h-8 me-3"
-                alt="Logo"
+                alt="FlowBite Logo"
               />
               <span className="self-center text-xl font-semibold sm:text-2xl dark:text-white">
                 Dashboard
               </span>
             </a>
+          </div>
+          <div className="relative">
             <button
               onClick={() => setDropdownOpen(!isDropdownOpen)}
               className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -44,47 +46,45 @@ const Navbar = ({ toggleSidebar }) => {
                 alt="user"
               />
             </button>
-            <div className="relative">
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-gray-700 rounded-md shadow-md">
-                  <div className="px-4 py-3">
-                    <p className="text-sm text-gray-900 dark:text-white">
-                      User name
-                    </p>
-                    <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
-                      {user.email}
-                    </p>
-                  </div>
-                  <ul className="py-1">
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        Settings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/login"
-                        onClick={logout}
-                        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        Sign out
-                      </a>
-                    </li>
-                  </ul>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-gray-700 rounded-md shadow-md">
+                <div className="px-4 py-3">
+                  <p className="text-sm text-gray-900 dark:text-white">
+                    Neil Sims
+                  </p>
+                  <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
+                    {user.email}
+                  </p>
                 </div>
-              )}
-            </div>
+                <ul className="py-1">
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                    >
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                    >
+                      Settings
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      onClick={logout}
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                    >
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -151,9 +151,15 @@ const Dashboard = ({ children }) => {
   return (
     <div className="flex">
       <Sidebar isOpen={isSidebarOpen} />
-      <div className="flex-1 sm:ml-64">
+      <div className="flex-1">
         <Navbar toggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
-        <main className="p-4 mt-17">{children}</main>
+        <main className="p-4 h-screen overflow-y-auto">
+          <div className="p-4 sm:ml-64">
+            <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+              {children}
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );
