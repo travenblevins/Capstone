@@ -101,7 +101,7 @@ Content-Type: application/json
 ### Test user updating profile
 PUT http://localhost:3001/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJlbWFpbCI6Im1pY2hhZWxAZ21haWwuY29tIiwiaWF0IjoxNzQxNzA2NzkyLCJleHAiOjE3NDE3MTAzOTJ9.Az7JlmFAiGkdVVzxFOsrTa_zhQl1bQ5XjLeEOlCHQaw
+Authorization: Bearer 
 
 {
     "firstName": "Michael",
@@ -112,7 +112,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJlb
 ### Test creating a course
 POST http://localhost:3001/admin/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTcwODEyMSwiZXhwIjoxNzQxNzExNzIxfQ.2zpMxJbd_7SbmuAHVOP5Wo4wUeGV8T1trYoy2YuSrJg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTc5MDgwMSwiZXhwIjoxNzQxNzk0NDAxfQ.XRatboaWV3yJwxd1NjW9d8WPXSaEv7XmFZDeJ40WMjM
 
 {
     "courseCode": "BIO-101",
@@ -124,3 +124,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
     "credits": 3,
     "fee": 100.00
 }
+
+### Test editing
+PUT http://localhost:3001/admin/courses/BIO-101
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "courseCode": "BIO-101",
+    "courseName": "Intro to Evolutionary Science",
+    "description": "This course is an introduction to the principles of evolutionary science.",
+    "schedule": "MWF 10:00-11:00",
+    "room": "Lab-3934",
+    "capacity": 30,
+    "credits": 3,
+    "fee": 150.00
+}
+
+### Test deleting a course
+DELETE http://localhost:3001/admin/courses/BIO-101
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTc5MDAwOSwiZXhwIjoxNzQxNzkzNjA5fQ.eZ6IKooZ1ZhJhYE371JAbqE95EKxdkAjg_vkRX7ykhA
+
+### Test enrolling a user
+POST http://localhost:3001/admin/users/21/BIO-101/enroll
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test unenrolling a user
+DELETE http://localhost:3001/admin/users/21/BIO-101/unenroll
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTc5MDgwMSwiZXhwIjoxNzQxNzk0NDAxfQ.XRatboaWV3yJwxd1NjW9d8WPXSaEv7XmFZDeJ40WMjM

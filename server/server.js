@@ -560,7 +560,7 @@ app.delete('/admin/courses/:course_code', authenticateToken, async (req, res) =>
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, secretKey);
 
-    if(decoded.admin === true) {
+    if (decoded.admin === true) {
       const query = "DELETE FROM courses WHERE course_code = $1";
       await client.query(query, [courseCode]);
       res.json({ message: "Course deleted successfully" });
@@ -607,7 +607,7 @@ app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
   const courseCode = req.params.course_code;
   const { courseName, description, schedule, room, fee } = req.body;
 
-  if(!courseName || !description || !schedule || !room || !fee) {
+  if (!courseName || !description || !schedule || !room || !fee) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -633,6 +633,63 @@ app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Error updating course" });
   }
 
+});
+
+app.post("/admin/users/:user_id/:course_code/enroll", authenticateToken, async (req, res) => {
+  const userId = req.params.user_id;
+  const courseCode = req.params.course_code;
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = "SELECT * FROM user_courses WHERE user_id = $1 AND course_code = $2";
+      const result = await client.query(query, [userId, courseCode]);
+
+      if (result.rows.length > 0) {
+        res.json({ message: 'Already enrolled: ', enrollment: result.rows[0] });
+      }
+
+      const insertQuery = "INSERT INTO user_courses (user_id, course_code) VALUES ($1, $2) RETURNING *";
+      const insertValues = [userId, courseCode];
+      const insertResult = await client.query(insertQuery, insertValues);
+      const enrollment = insertResult.rows[0];
+      res.status(201).json({ message: "Successfully enrolled user in course", enrollment });
+
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+  } catch (err) {
+    console.error("Error verifying token", err);
+    res.status(401).json({ error: "Invalid token" });
+  }
+});
+
+app.delete('/admin/users/:user_id/:course_code/unenroll', authenticateToken, async (req, res) => {
+  const userId = req.params.user_id;
+  const courseCode = req.params.course_code;
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = "SELECT * FROM user_courses WHERE user_id = $1 AND course_code = $2";
+      const result = await client.query(query, [userId, courseCode]);
+
+      if(result.rows.length === 0) {
+        return res.status(404).json({ error: "User not enrolled in this course" });
+      }
+
+      const deleteQuery = "DELETE FROM user_courses WHERE user_id = $1 AND course_code = $2 RETURNING *";
+      const deleteValues = [userId, courseCode];
+      const deleteResult = await client.query(deleteQuery, deleteValues);
+      const enrollment = deleteResult.rows[0];
+      res.json({ message: "Successfully unenrolled user from course", enrollment });
+    }
+  } catch (err) {
+    console.error("Error verifying token", err);
+    res.status(401).json({ error: "Invalid token" });
+  }
 });
 
 
