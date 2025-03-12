@@ -19,11 +19,6 @@
             "date": 1741622912801,
             "name": "logs/server-2025-03-10.log",
             "hash": "4566a36167cc3f05c2da0ab5e3e137708ee48eeaab3afe572f55ac119a2f8c8b"
-        },
-        {
-            "date": 1741706563125,
-            "name": "logs/server-2025-03-11.log",
-            "hash": "1dfa737864ad6809870a7de164fc6efd54fdf2e2fd19fac01cf5327867c1434e"
         }
     ],
     "hashType": "sha256"
