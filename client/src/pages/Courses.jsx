@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../components/Sidebar";
+import CourseCard from "../components/CourseCard";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -54,26 +55,18 @@ const Courses = () => {
   // };
 
   return (
-    <div>
-      <Dashboard>
-        <h2>Courses</h2>
-        <ul>
-          {courses.length > 0 ? (
-            courses.map((course) => (
-              <li key={course.course_id}>
-                {course.description} - {course.credits} credits,{" "}
-                {course.schedule}
-                {/* <button onClick={() => enrollInCourse(course.course_id)}>
-                Enroll
-              </button> */}
-              </li>
-            ))
-          ) : (
-            <p>Loading Courses...</p>
-          )}
-        </ul>
-      </Dashboard>
-    </div>
+    <Dashboard>
+      <h2 className="text-xl font-bold mb-4">Courses:</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {courses.length > 0 ? (
+          courses.map((course) => (
+            <CourseCard key={course.course_id} course={course} />
+          ))
+        ) : (
+          <p>Loading Courses...</p>
+        )}
+      </div>
+    </Dashboard>
   );
 };
 
