@@ -684,7 +684,7 @@ app.delete('/admin/users/:user_id/:course_code/unenroll', authenticateToken, asy
       const query = "SELECT * FROM user_courses WHERE user_id = $1 AND course_code = $2";
       const result = await client.query(query, [userId, courseCode]);
 
-      if(result.rows.length === 0) {
+      if (result.rows.length === 0) {
         return res.status(404).json({ error: "User not enrolled in this course" });
       }
 
@@ -700,8 +700,53 @@ app.delete('/admin/users/:user_id/:course_code/unenroll', authenticateToken, asy
   }
 });
 
+app.get("/admin/search/users/:first_name/:last_name", authenticateToken, async (req, res) => {
+  const firstName = req.params.first_name;
+  const lastName = req.params.last_name;
 
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.admin === true) {
+      const query = "SELECT * FROM users WHERE LOWER(first_name) = LOWER($1) AND LOWER(last_name) = LOWER($2)";
+      const result = await client.query(query, [firstName, lastName]);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.json({ user: result.rows[0] });
+    } else {
+      res.status(403).json({ error: "You are unauthorized and cannot access this page" });
+    }
+  } catch (err) {
+    console.error("Error fetching data", err.stack);
+    res.status(500).send("Error fetching data");
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+app.get("/admin/search/courses/:course_name", authenticateToken, async (req, res) => {
+  const courseName = req.params.course_name;
+
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    if(decoded.admin = true) {
+      const query = "SELECT * FROM courses WHERE LOWER(course_name) = LOWER($1)";
+      const result = await client.query(query, [courseName]);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: "Course not found" });
+      }
+
+      res.json({ course: result.rows[0] });
+    } else {
+      res.json({ error: "You are unauthorized and cannot access this page" });
+    }
+  } catch (err) {
+    console.error("Error fetching data", err.stack);
+  }});

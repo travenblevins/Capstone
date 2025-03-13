@@ -58,9 +58,9 @@ Content-Type: application/json
 Authorization: Bearer 
 
 ### Test deleting user
-DELETE https://capstone-gmm5.onrender.com/admin/users/12
+DELETE https://capstone-gmm5.onrender.com/admin/users/24
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
 
 ### Test admin creating a user
 POST https://capstone-gmm5.onrender.com/admin/users
@@ -111,7 +111,7 @@ Authorization: Bearer
 ### Test creating a course
 POST https://capstone-gmm5.onrender.com/admin/courses
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
 
 {
     "courseCode": "BIO-101",
@@ -127,7 +127,7 @@ Authorization: Bearer
 ### Test editing
 PUT https://capstone-gmm5.onrender.com/admin/courses/BIO-101
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
 
 {
     "courseCode": "BIO-101",
@@ -137,20 +137,30 @@ Authorization: Bearer
     "room": "Lab-3934",
     "capacity": 30,
     "credits": 3,
-    "fee": 150.00
+    "fee": 200.00
 }
 
 ### Test deleting a course
 DELETE https://capstone-gmm5.onrender.com/admin/courses/BIO-101
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
 
 ### Test enrolling a user
-POST https://capstone-gmm5.onrender.com/admin/users/21/BIO-101/enroll
+POST https://capstone-gmm5.onrender.com/admin/users/21/CSCI-1001/enroll
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+
+### Test unenrolling a user
+DELETE https://capstone-gmm5.onrender.com/admin/users/20/CSCI-1001/unenroll
 Content-Type: application/json
 Authorization: Bearer 
 
-### Test unenrolling a user
-DELETE https://capstone-gmm5.onrender.com/admin/users/21/BIO-101/unenroll
+### Test searching for a user
+GET http://localhost:10000/admin/search/users/Michael/Scott
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+
+### Test searching for a course
+GET http://localhost:10000/admin/search/courses/Computer Architecture
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
