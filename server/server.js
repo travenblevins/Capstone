@@ -17,7 +17,7 @@ app.use(express.static(path.resolve(__dirname, "../client/dist")));
 app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 10000;
 
 const logTransport = new winston.transports.DailyRotateFile({
   filename: 'logs/server-%DATE%.log',

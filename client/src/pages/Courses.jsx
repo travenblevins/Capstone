@@ -16,7 +16,7 @@ const Courses = () => {
         return;
       }
       try {
-        const response = await fetch("http://localhost:3001/courses", {
+        const response = await fetch("https://capstone-gmm5.onrender.com/courses", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {

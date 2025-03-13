@@ -16,7 +16,7 @@ const Profile = () => {
         return;
       }
       try {
-        const response = await fetch("http://localhost:3001/profile", {
+        const response = await fetch("https://capstone-gmm5.onrender.com/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
