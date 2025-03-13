@@ -66,7 +66,11 @@ app.use((err, req, res, next) => {
 
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
+  user: process.env.PG_USER,         // Your PostgreSQL username
+  host: process.env.PG_HOST,         // Usually 'localhost' or an IP address
+  database: process.env.PG_DATABASE, // Your database name
+  password: process.env.PG_PASSWORD, // Your PostgreSQL password
+  port: process.env.PG_PORT || 5432, // Default PostgreSQL port is 5432
   ssl: {
     rejectUnauthorized: false
   }
