@@ -8,28 +8,29 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
+  const fetchCourses = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    try {
+      const response = await fetch("https://capstone-gmm5.onrender.com/courses", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setCourses(data.courses);
+        console.log(data);
+      } else {
+        console.error("Failed to fetch courses");
+      }
+    } catch (error) {
+      console.error("Error fetching courses", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchCourses = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-      try {
-        const response = await fetch("https://capstone-gmm5.onrender.com/courses", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setCourses(data.courses);
-          console.log(data);
-        } else {
-          console.error("Failed to fetch courses");
-        }
-      } catch (error) {
-        console.error("Error fetching courses", error);
-      }
-    };
     fetchCourses();
   }, [navigate]);
 
@@ -58,6 +59,7 @@ const Courses = () => {
 
       if (response.ok) {
         console.log("Enrolled successfully!");
+        fetchCourses(); // Refresh the courses list
 
         // Update state to reflect enrollment
         setCourses((prevCourses) =>
@@ -100,6 +102,7 @@ const Courses = () => {
 
       if (response.ok) {
         console.log("Unenrolled successfully!");
+        fetchCourses(); // Refresh the courses list
 
         // Update state to reflect unenrollment
         setCourses((prevCourses) =>
