@@ -21,7 +21,7 @@ const Admin = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3001/admin", {
+      const response = await fetch("https://capstone-gmm5.onrender.com/admin", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -39,7 +39,7 @@ const Admin = () => {
   const deleteUser = async (userId) => {
     const token = localStorage.getItem("token");
     try {
-      await fetch(`http://localhost:3001/admin/users/${userId}`, {
+      await fetch(`https://capstone-gmm5.onrender.com/admin/users/${userId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -52,7 +52,7 @@ const Admin = () => {
   const deleteCourse = async (courseCode) => {
     const token = localStorage.getItem("token");
     try {
-      await fetch(`http://localhost:3001/admin/courses/${courseCode}`, {
+      await fetch(`https://capstone-gmm5.onrender.com/admin/courses/${courseCode}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
