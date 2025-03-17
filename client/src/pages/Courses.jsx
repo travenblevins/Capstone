@@ -127,10 +127,10 @@ const Courses = () => {
               key={course.course_id}
               course={course}
               enrollInCourse={() => {
-                enrollInCourse(course.name);
+                enrollInCourse(course.course_name);
               }}
               unEnrollInCourse={() => {
-                unEnrollInCourse(course.name);
+                unEnrollInCourse(course.course_name);
               }}
             />
           ))
