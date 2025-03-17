@@ -44,7 +44,7 @@ const Courses = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/courses/${encodeURIComponent(
+        `https://capstone-gmm5.onrender.com/courses/${encodeURIComponent(
           course_name
         )}/enroll`,
         {
@@ -86,7 +86,7 @@ const Courses = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/courses/${encodeURIComponent(
+        `https://capstone-gmm5.onrender.com/courses/${encodeURIComponent(
           course_name
         )}/unenroll`,
         {
