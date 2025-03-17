@@ -13,6 +13,7 @@ import Courses from "./pages/Courses";
 import Login from "./pages/login";
 import { useContext } from "react";
 import AuthContext, { AuthProvider } from "./context/AuthContext";
+import Admin from "./pages/Admin";
 
 function App() {
   // Consume the user context
@@ -50,6 +51,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Courses />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
               </ProtectedRoute>
             }
           />
