@@ -4,7 +4,7 @@ const CourseCard = ({ course, enrollInCourse, unEnrollInCourse }) => {
   return (
     <div className="flex flex-col justify-between border p-4 rounded-lg shadow-md bg-white dark:bg-gray-800">
       <div>
-        <h3 className="text-lg font-semibold">{course.name}</h3>
+        <h3 className="text-lg font-semibold">{course.course_name}</h3>
       </div>
       <div>
         <p className="text-gray-600 dark:text-gray-300">{course.description}</p>
