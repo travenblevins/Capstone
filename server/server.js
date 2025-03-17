@@ -282,24 +282,26 @@ app.put('/profile', authenticateToken, async (req, res) => {
 
 app.get("/courses", authenticateToken, async (req, res) => {
   try {
-    // Query to fetch data from the 'courses' table
-    const result = await client.query("SELECT * FROM courses");  // Query for the courses table
+    const userId = req.userId; // Get user ID from the token
+    
+    // Fetch all courses
+    const coursesQuery = "SELECT * FROM courses";
+    const coursesResult = await client.query(coursesQuery);
+    const courses = coursesResult.rows;
 
-    // Formatting the response data (optional)
-    const formattedCourses = result.rows.map(course => ({
-      course_id: course.course_code,
-      name: course.course_name,
-      description: course.description,
-      schedule: course.schedule,
-      room: course.room,
-      fee: course.fee
+    //Fetch enrolled courses for the current user
+    const enrolledQuery = `SELECT course_code FROM user_courses WHERE user_id = $1`;
+    const enrolledResult = await client.query(enrolledQuery, [userId]);
+
+    const enrolledCourses = new Set(enrolledResult.rows.map(row => row.course_code));
+
+    // Add isEnrolled property to each course
+    const coursesWithEnrollment = courses.map(course => ({
+      ...course,
+      isEnrolled: enrolledCourses.has(course.course_code)
     }));
 
-    // Send formatted data as a JSON response
-    res.json({
-      totalCourses: formattedCourses.length,  // Optional: include total count
-      courses: formattedCourses
-    });
+    res.json({ courses: coursesWithEnrollment });
 
   } catch (err) {
     console.error("Error fetching data", err);
