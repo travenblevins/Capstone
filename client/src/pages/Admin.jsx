@@ -5,6 +5,7 @@ import CreateUserForm from "../components/CreateUserForm";
 import UpdateUserForm from "../components/UpdateUserForm";
 import AdminCourses from "../components/AdminCourses";
 import UpdateCourseForm from "../components/UpdateCourseForm";
+import CreateCourseForm from "../components/CreateCourseForm";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const Admin = () => {
 
       {/* Manage Courses */}
       <h2>Courses</h2>
-      {/* <AdminCourses courses={courses} onCoursesUpdated={fetchAdminData} /> */}
+      <CreateCourseForm onCourseCreated={fetchAdminData} />
       <div>
         <ul>
           {courses.map((course) => (

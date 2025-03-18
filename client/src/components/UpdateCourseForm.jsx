@@ -14,9 +14,6 @@ const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
-    console.log(course.course_id);
-    console.log(course);
   };
 
   const handleSubmit = async (e) => {
