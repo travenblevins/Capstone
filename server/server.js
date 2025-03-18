@@ -598,9 +598,9 @@ app.delete('/admin/courses/:course_code', authenticateToken, async (req, res) =>
 
 // Admin: Create a new course
 app.post('/admin/courses', authenticateToken, async (req, res) => {
-  const { courseCode, courseName, description, schedule, room, capacity, credits, fee } = req.body;
+  const { courseName, description, schedule, room, capacity, credits, fee } = req.body;
 
-  if (!courseCode || !courseName || !description || !schedule || !room || !capacity || !credits || !fee) {
+  if (!courseName || !description || !schedule || !room || !capacity || !credits || !fee) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -609,10 +609,10 @@ app.post('/admin/courses', authenticateToken, async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     if (decoded.admin === true) {
       const query = `
-      INSERT INTO courses (course_code, course_name, description, schedule, room, capacity, credits, fee)
+      INSERT INTO courses (course_name, description, schedule, room, capacity, credits, fee)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING course_code, course_name, description, schedule, room, capacity, credits, fee
     `;
-      const values = [courseCode, courseName, description, schedule, room, capacity, credits, fee];
+      const values = [courseName, description, schedule, room, capacity, credits, fee];
       const result = await client.query(query, values);
       const newCourse = result.rows[0];
 
