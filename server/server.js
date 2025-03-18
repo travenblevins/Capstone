@@ -432,16 +432,19 @@ app.get("/admin", authenticateToken, async (req, res) => {
       try {
         // Query to fetch data from the 'courses' table
         const result = await client.query("SELECT * FROM courses");
+        console.log(result.rows)
         const users = await client.query("SELECT * FROM users");
         const userTable = await client.query('SELECT * FROM user_courses')
 
         // Formatting the response data (optional)
         const formattedCourses = result.rows.map(course => ({
           course_id: course.course_code,
-          name: course.course_name,
+          course_name: course.course_name,
           description: course.description,
           schedule: course.schedule,
           room: course.room,
+          capacity: course.capacity,
+          credits: course.credits,
           fee: course.fee
         }));
 
@@ -595,7 +598,6 @@ app.delete('/admin/courses/:course_code', authenticateToken, async (req, res) =>
 });
 
 // Admin: Create a new course
-
 app.post('/admin/courses', authenticateToken, async (req, res) => {
   const { courseCode, courseName, description, schedule, room, capacity, credits, fee } = req.body;
 

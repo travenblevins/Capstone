@@ -55,7 +55,7 @@ Authorization: Bearer
 ### Test admin page
 GET https://capstone-gmm5.onrender.com/admin
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMxMDQ0MywiZXhwIjoxNzQyMzE0MDQzfQ.1rXbSSu-RvJN9ZoXsYz3vyoUjeseNOa7yWsGUPA18w8
 
 ### Test deleting user
 DELETE https://capstone-gmm5.onrender.com/admin/users/24
@@ -148,7 +148,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test enrolling a user
 POST https://capstone-gmm5.onrender.com/admin/users/21/CSCI-1001/enroll
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer 
 
 ### Test unenrolling a user
 DELETE https://capstone-gmm5.onrender.com/admin/users/20/CSCI-1001/unenroll
@@ -163,17 +163,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test searching for a course
 GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+Authorization: Bearer 
 
 ### Test deleting a user
 DELETE https://capstone-gmm5.onrender.com/admin/users/6
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+Authorization: Bearer 
 
 ### Test creating a user
 POST https://capstone-gmm5.onrender.com/admin/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+Authorization: Bearer 
 
 {
     "firstName": "Barry",
@@ -182,4 +182,77 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
     "password": "123456",
     "admin": "no"
 }
+
+### Test editing a user
+PUT https://capstone-gmm5.onrender.com/admin/users/20
+Content-Type: application/json
+Authorization: Bearer
+
+{
+    "firstName": "Barry",
+    "lastName": "Allen",
+    "email": "barry38@gmail.com",
+    "password": "654321",
+    "admin": "no"
+}
+
+### Test creating a course
+POST https://capstone-gmm5.onrender.com/admin/courses
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwODg1NSwiZXhwIjoxNzQyMzEyNDU1fQ.VlizpOeEl8DbeYdhjmQ-0gwfXEbCPtOea8hBhocbFes
+
+{
+    "courseCode": "CSCI-10022",
+    "courseName": "Computer Analysis",
+    "description": "This course covers the fundamentals of computer architecture.",
+    "schedule": "TTh 9:00-10:30",
+    "room": "Room-101",
+    "capacity": 40,
+    "credits": 4,
+    "fee": 150.00
+}
+
+### Test editing a course
+PUT https://capstone-gmm5.onrender.com/admin/courses/CSCI-10022
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "courseCode": "CSCI-10022",
+    "courseName": "Computer Analysis",
+    "description": "This course covers the fundamentals of computer architecture.",
+    "schedule": "TTh 9:00-10:30",
+    "room": "Room-101",
+    "capacity": 40,
+    "credits": 4,
+    "fee": 200.00
+}
+
+### Test deleting a course
+DELETE https://capstone-gmm5.onrender.com/admin/courses/BIO-1011
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test enrolling a user
+POST https://capstone-gmm5.onrender.com/admin/users/21/BIO-101/enroll
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test unenrolling a user
+DELETE https://capstone-gmm5.onrender.com/admin/users/21/BIO-101/unenroll
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test searching for a user
+GET https://capstone-gmm5.onrender.com/admin/search/users/Michael/Scott
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test searching for a course
+GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMxMDE2MywiZXhwIjoxNzQyMzEzNzYzfQ.sR1gDS2xSiWgRWTRICs3M_TQUniWdYqz8FxVFCVe4qE
+
+
+
 
