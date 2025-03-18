@@ -16,8 +16,6 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    console.log(formData);
-    console.log(user.id);
 
     try {
       const response = await fetch(
