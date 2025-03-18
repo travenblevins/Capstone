@@ -30,7 +30,7 @@ Content-Type: application/json
 ### Test User Profile
 GET https://capstone-gmm5.onrender.com/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlhdCI6MTc0MTgwNjg0OCwiZXhwIjoxNzQxODEwNDQ4fQ.Jajys32mMlZ_EBKWrMRHVnmUTLrO6lP7g6J-CgrkF1s
+Authorization: Bearer 
 
 ### Test Course Page
 GET https://capstone-gmm5.onrender.com/courses
@@ -156,11 +156,30 @@ Content-Type: application/json
 Authorization: Bearer 
 
 ### Test searching for a user
-GET http://localhost:10000/admin/search/users/Michael/Scott
+GET https://capstone-gmm5.onrender.com/admin/search/users/Michael/Scott
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
 
 ### Test searching for a course
-GET http://localhost:10000/admin/search/courses/Computer Architecture
+GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+
+### Test deleting a user
+DELETE https://capstone-gmm5.onrender.com/admin/users/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+
+### Test creating a user
+POST https://capstone-gmm5.onrender.com/admin/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+
+{
+    "firstName": "Barry",
+    "lastName": "Allen",
+    "email": "barry1@gmail.com",
+    "password": "123456",
+    "admin": "no"
+}
+

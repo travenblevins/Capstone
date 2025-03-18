@@ -329,6 +329,8 @@ app.get("/courses/:course_name", authenticateToken, async (req, res) => {
   }
 });
 
+//User can enroll in a course
+
 app.post("/courses/:course_name/enroll", authenticateToken, async (req, res) => {
   console.log("Request body:", req.body); // Log the incoming body
   console.log("Request params:", req.params); // Log the incoming params
@@ -418,6 +420,8 @@ app.post("/courses/:course_name/unenroll", authenticateToken, async (req, res) =
   }
 })
 
+// Admin page
+
 app.get("/admin", authenticateToken, async (req, res) => {
   try {
     // Use jwt.verify() to properly verify and decode the token
@@ -477,6 +481,7 @@ app.get("/admin", authenticateToken, async (req, res) => {
   }
 });
 
+// Admin: Delete a user
 
 app.delete('/admin/users/:user_id', authenticateToken, async (req, res) => {
   const userId = req.params.user_id;
@@ -496,6 +501,8 @@ app.delete('/admin/users/:user_id', authenticateToken, async (req, res) => {
     res.status(401).json({ error: "Invalid token" });
   }
 });
+
+// Admin: Create a new user
 
 app.post('/admin/users', authenticateToken, async (req, res) => {
   const { firstName, lastName, email, password, admin } = req.body;
@@ -528,6 +535,8 @@ app.post('/admin/users', authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Error creating user" });
   }
 });
+
+// Admin: Update a user
 
 app.put('/admin/users/:user_id', authenticateToken, async (req, res) => {
 
@@ -564,6 +573,8 @@ app.put('/admin/users/:user_id', authenticateToken, async (req, res) => {
   }
 });
 
+// Admin: Delete a course
+
 app.delete('/admin/courses/:course_code', authenticateToken, async (req, res) => {
   const courseCode = req.params.course_code;
   try {
@@ -582,6 +593,8 @@ app.delete('/admin/courses/:course_code', authenticateToken, async (req, res) =>
     res.status(401).json({ error: "Invalid token" });
   }
 });
+
+// Admin: Create a new course
 
 app.post('/admin/courses', authenticateToken, async (req, res) => {
   const { courseCode, courseName, description, schedule, room, capacity, credits, fee } = req.body;
@@ -612,6 +625,8 @@ app.post('/admin/courses', authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Error creating course" });
   }
 });
+
+// Admin: Update a course
 
 app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
   const courseCode = req.params.course_code;
@@ -645,6 +660,8 @@ app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
 
 });
 
+// Admin: Enroll a user in a course
+
 app.post("/admin/users/:user_id/:course_code/enroll", authenticateToken, async (req, res) => {
   const userId = req.params.user_id;
   const courseCode = req.params.course_code;
@@ -675,6 +692,8 @@ app.post("/admin/users/:user_id/:course_code/enroll", authenticateToken, async (
   }
 });
 
+// Admin: Unenroll a user from a course
+
 app.delete('/admin/users/:user_id/:course_code/unenroll', authenticateToken, async (req, res) => {
   const userId = req.params.user_id;
   const courseCode = req.params.course_code;
@@ -701,6 +720,8 @@ app.delete('/admin/users/:user_id/:course_code/unenroll', authenticateToken, asy
     res.status(401).json({ error: "Invalid token" });
   }
 });
+
+// Admin: Search for a user by first name and last name
 
 app.get("/admin/search/users/:first_name/:last_name", authenticateToken, async (req, res) => {
   const firstName = req.params.first_name;
@@ -730,6 +751,8 @@ app.get("/admin/search/users/:first_name/:last_name", authenticateToken, async (
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+// Admin: Search for a course by name
 
 app.get("/admin/search/courses/:course_name", authenticateToken, async (req, res) => {
   const courseName = req.params.course_name;
