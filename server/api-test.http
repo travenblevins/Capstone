@@ -111,11 +111,10 @@ Authorization: Bearer
 ### Test creating a course
 POST https://capstone-gmm5.onrender.com/admin/courses
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMyNDU0MSwiZXhwIjoxNzQyMzI4MTQxfQ.F2zExsiar31S-eDWJvW8P8HV5G94YFxAyhV3Lgg7BL4
 
 {
-    "courseCode": "BIO-1011",
-    "courseName": "Intro to Evolutionary Science",
+    "courseName": "Intro to Evolutionary Math",
     "description": "This course is an introduction to the principles of evolutionary science.",
     "schedule": "MWF 10:00-11:00",
     "room": "Lab-3934",
@@ -202,8 +201,7 @@ Content-Type: application/json
 Authorization: Bearer 
 
 {
-    "courseCode": "CSCI-10022",
-    "courseName": "Computer Analysis",
+    "courseName": "Computer Structure",
     "description": "This course covers the fundamentals of computer architecture.",
     "schedule": "TTh 9:00-10:30",
     "room": "Room-101",
