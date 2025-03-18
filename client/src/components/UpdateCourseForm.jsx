@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-const UpdateUserForm = ({ user, onUpdateSuccess }) => {
+const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
-    firstName: user.first_name,
-    lastName: user.last_name,
-    email: user.email,
-    password: "",
-    admin: user.admin,
+    courseName: course.courseName,
+    description: course.description,
+    schedule: course.schedule,
+    room: course.room,
+    fee: course.fee,
   });
 
   const handleChange = (e) => {
@@ -17,11 +17,12 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     console.log(formData);
-    console.log(user.id);
+    console.log(course.course_id);
+    console.log(course);
 
     try {
       const response = await fetch(
-        `https://capstone-gmm5.onrender.com/admin/users/${user.id}`,
+        `https://capstone-gmm5.onrender.com/admin/courses/${course.id}`,
         {
           method: "PUT",
           headers: {
@@ -35,10 +36,10 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
       if (response.ok) {
         onUpdateSuccess();
       } else {
-        console.error("Failed to update user");
+        console.error("Failed to update course");
       }
     } catch (error) {
-      console.error("Error updating user", error);
+      console.error("Error updating course", error);
     }
   };
 
@@ -47,70 +48,69 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
       onSubmit={handleSubmit}
       className="p-4 border rounded-lg bg-white shadow-md"
     >
-      <h3>Update User</h3>
+      <h3>Update course</h3>
       <label className="block mb-2">
-        First Name:
+        Name:
         <input
           required
           type="text"
-          name="firstName"
-          value={formData.firstName}
+          name="courseName"
+          value={formData.courseName}
           onChange={handleChange}
           className="border p-2 w-full"
         />
       </label>
       <label className="block mb-2">
-        Last Name:
+        Description:
         <input
           required
           type="text"
-          name="lastName"
-          value={formData.lastName}
+          name="description"
+          value={formData.description}
           onChange={handleChange}
           className="border p-2 w-full"
         />
       </label>
       <label className="block mb-2">
-        Email:
+        Schedule:
         <input
           required
-          type="email"
-          name="email"
-          value={formData.email}
+          type="text"
+          name="schedule"
+          value={formData.schedule}
           onChange={handleChange}
           className="border p-2 w-full"
         />
       </label>
       <label className="block mb-2">
-        Password:
+        Room:
         <input
           required
-          type="password"
-          name="password"
-          value={formData.password}
+          type="text"
+          name="room"
+          value={formData.room}
           onChange={handleChange}
           className="border p-2 w-full"
         />
       </label>
       <label className="block mb-2">
-        Admin:
+        Fee:
         <input
-          type="checkbox"
-          name="admin"
-          checked={formData.admin}
-          onChange={(e) =>
-            setFormData({ ...formData, admin: e.target.checked })
-          }
+          type="text"
+          name="fee"
+          checked={formData.fee}
+          onChange={handleChange}
+          className="border p-2 w-full"
         />
       </label>
       <button
         type="submit"
         className="bg-blue-500 text-white p-2 rounded-lg mt-2"
       >
-        Update User
+        Update Course
       </button>
     </form>
   );
 };
 
-export default UpdateUserForm;
+export default UpdateCourseForm;
