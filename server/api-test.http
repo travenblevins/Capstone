@@ -114,7 +114,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
 
 {
-    "courseCode": "BIO-101",
+    "courseCode": "BIO-1011",
     "courseName": "Intro to Evolutionary Science",
     "description": "This course is an introduction to the principles of evolutionary science.",
     "schedule": "MWF 10:00-11:00",

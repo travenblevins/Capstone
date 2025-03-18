@@ -3,12 +3,13 @@ import Dashboard from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import CreateUserForm from "../components/CreateUserForm";
 import UpdateUserForm from "../components/UpdateUserForm";
+import AdminCourses from "../components/AdminCourses";
 
 const Admin = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null); // Store selected user for editing
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetchAdminData();
@@ -49,23 +50,13 @@ const Admin = () => {
     }
   };
 
-  const deleteCourse = async (courseCode) => {
-    const token = localStorage.getItem("token");
-    try {
-      await fetch(`https://capstone-gmm5.onrender.com/admin/courses/${courseCode}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      fetchAdminData();
-    } catch (error) {
-      console.error("Error deleting course", error);
-    }
-  };
   return (
     <Dashboard>
       <h1>Admin Dashboard</h1>
+
+      {/* Manage Users */}
       <h2>Users</h2>
-      {/* <CreateUserForm /> */}
+      <CreateUserForm onUserCreated={fetchAdminData} />
       <div>
         <ul>
           {users.map((user) => (
@@ -75,39 +66,26 @@ const Admin = () => {
             >
               {user.firstName} {user.lastName} - {user.email}
               <button onClick={() => deleteUser(user.id)}>Delete User</button>
-              <button onClick={() => setSelectedUser(user)}>
-                Edit User
-              </button>{" "}
-              {/* Set user for editing */}
+              <button onClick={() => setSelectedUser(user)}>Edit User</button>
             </li>
           ))}
         </ul>
       </div>
 
-      {selectedUser && ( // Show update form when a user is selected
+      {/* Show Update Form When a User is Selected */}
+      {selectedUser && (
         <UpdateUserForm
           user={selectedUser}
           onUpdateSuccess={() => {
             fetchAdminData();
-            setSelectedUser(null); // Hide form after update
+            setSelectedUser(null);
           }}
         />
       )}
 
+      {/* Manage Courses */}
       <h2>Courses</h2>
-      <ul>
-        {courses.map((course) => (
-          <li
-            key={course.courseCode}
-            className="flex flex-col justify-between border p-4 rounded-lg shadow-md bg-white"
-          >
-            {course.name} - {course.room}
-            <button onClick={() => deleteCourse(course.courseCode)}>
-              Delete Course
-            </button>
-          </li>
-        ))}
-      </ul>
+      <AdminCourses courses={courses} onCoursesUpdated={fetchAdminData} />
     </Dashboard>
   );
 };
