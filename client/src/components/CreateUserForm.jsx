@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CreateUserForm = () => {
+const CreateUserForm = ({ onUserCreated }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +21,12 @@ const CreateUserForm = () => {
         },
         body: JSON.stringify(newUser),
       });
-      alert("User created successfully!");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setAdmin("no");
+      onUserCreated();
     } catch (error) {
       console.error("Error creating user", error);
     }

@@ -15,6 +15,7 @@ const Admin = () => {
 
   useEffect(() => {
     fetchAdminData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchAdminData = async () => {
@@ -31,7 +32,6 @@ const Admin = () => {
         const data = await response.json();
         setUsers(data.users || []);
         setCourses(data.courses || []);
-        console.log(data);
       } else {
         console.error("Failed to fetch admin data");
       }
@@ -53,11 +53,28 @@ const Admin = () => {
     }
   };
 
+  const deleteCourse = async (courseCode) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(
+        `https://capstone-gmm5.onrender.com/admin/courses/${courseCode}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete course");
+      }
+      fetchAdminData();
+    } catch (error) {
+      console.error("Error deleting course:", error);
+    }
+  };
+
   return (
     <Dashboard>
       <h1>Admin Dashboard</h1>
-
-      {/* Manage Courses */}
       <h2>Courses</h2>
       <CreateCourseForm onCourseCreated={fetchAdminData} />
       <div>
@@ -69,6 +86,9 @@ const Admin = () => {
             >
               {course.course_name} {course.description} {course.credits}
               {course.fee} {course.room}
+              <button onClick={() => deleteCourse(course.course_id)}>
+                Delete Course
+              </button>
               <button onClick={() => setSelectedCourse(course)}>
                 Edit course
               </button>

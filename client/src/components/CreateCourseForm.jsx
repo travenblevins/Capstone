@@ -39,10 +39,15 @@ const CreateCourseForm = ({ onCourseCreated }) => {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Course created successfully!");
-        if (onCourseCreated) {
-          onCourseCreated(); // 🔹 Call the function to refresh the courses
-        }
+        setCourseCode("");
+        setCourseName("");
+        setDescription("");
+        setSchedule("");
+        setRoom("");
+        setCapacity("");
+        setCredits("");
+        setFee("");
+        onCourseCreated();
       } else {
         alert(`Error: ${data.error}`);
       }
