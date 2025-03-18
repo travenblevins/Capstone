@@ -112,10 +112,10 @@ Authorization: Bearer
 ### Test creating a course
 POST http://localhost:3001/admin/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTc5MDgwMSwiZXhwIjoxNzQxNzk0NDAxfQ.XRatboaWV3yJwxd1NjW9d8WPXSaEv7XmFZDeJ40WMjM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjI1MjU3MCwiZXhwIjoxNzQyMjU2MTcwfQ.3-0jywSyrwOBeI8KJKaNbp1-vg7gM-yMSsATDtJnb7Q
 
 {
-    "courseCode": "BIO-101",
+    "courseCode": "BIO-1011",
     "courseName": "Intro to Evolutionary Science",
     "description": "This course is an introduction to the principles of evolutionary science.",
     "schedule": "MWF 10:00-11:00",
@@ -128,7 +128,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test editing
 PUT http://localhost:3001/admin/courses/BIO-101
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjI1MjU3MCwiZXhwIjoxNzQyMjU2MTcwfQ.3-0jywSyrwOBeI8KJKaNbp1-vg7gM-yMSsATDtJnb7Q
 
 {
     "courseCode": "BIO-101",
@@ -149,7 +149,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test enrolling a user
 POST http://localhost:3001/admin/users/21/BIO-101/enroll
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjI1MjU3MCwiZXhwIjoxNzQyMjU2MTcwfQ.3-0jywSyrwOBeI8KJKaNbp1-vg7gM-yMSsATDtJnb7Q
 
 ### Test unenrolling a user
 DELETE http://localhost:3001/admin/users/21/BIO-101/unenroll

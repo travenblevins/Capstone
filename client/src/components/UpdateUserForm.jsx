@@ -2,8 +2,8 @@ import { useState } from "react";
 
 const UpdateUserForm = ({ user, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
+    firstName: user.first_name,
+    lastName: user.last_name,
     email: user.email,
     password: "",
     admin: user.admin,
@@ -16,10 +16,12 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
+    console.log(formData);
+    console.log(user.id);
 
     try {
       const response = await fetch(
-        `http://localhost:3001/admin/users/${user.id}`,
+        `https://capstone-gmm5.onrender.com/admin/users/${user.id}`,
         {
           method: "PUT",
           headers: {
@@ -31,7 +33,7 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
       );
 
       if (response.ok) {
-        onUpdateSuccess(); // Refresh user list and close form
+        onUpdateSuccess();
       } else {
         console.error("Failed to update user");
       }
