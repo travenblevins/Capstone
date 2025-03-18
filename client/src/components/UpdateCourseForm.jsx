@@ -2,27 +2,30 @@ import { useState } from "react";
 
 const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
-    courseName: course.courseName,
+    courseCode: course.course_id,
+    courseName: course.course_name,
     description: course.description,
     schedule: course.schedule,
     room: course.room,
+    capacity: course.capacity,
+    credits: course.credits,
     fee: course.fee,
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
+    console.log(course.course_id);
+    console.log(course);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    console.log(formData);
-    console.log(course.course_id);
-    console.log(course);
 
     try {
       const response = await fetch(
-        `https://capstone-gmm5.onrender.com/admin/courses/${course.id}`,
+        `https://capstone-gmm5.onrender.com/admin/courses/${course.course_id}`,
         {
           method: "PUT",
           headers: {
@@ -94,11 +97,33 @@ const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
         />
       </label>
       <label className="block mb-2">
+        Capacity:
+        <input
+          required
+          type="text"
+          name="capacity"
+          value={formData.capacity}
+          onChange={handleChange}
+          className="border p-2 w-full"
+        />
+      </label>
+      <label className="block mb-2">
+        Credits:
+        <input
+          required
+          type="text"
+          name="credits"
+          value={formData.credits}
+          onChange={handleChange}
+          className="border p-2 w-full"
+        />
+      </label>
+      <label className="block mb-2">
         Fee:
         <input
           type="text"
           name="fee"
-          checked={formData.fee}
+          value={formData.fee}
           onChange={handleChange}
           className="border p-2 w-full"
         />
