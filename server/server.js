@@ -432,7 +432,6 @@ app.get("/admin", authenticateToken, async (req, res) => {
       try {
         // Query to fetch data from the 'courses' table
         const result = await client.query("SELECT * FROM courses");
-        console.log(result.rows)
         const users = await client.query("SELECT * FROM users");
         const userTable = await client.query('SELECT * FROM user_courses')
 
@@ -634,7 +633,7 @@ app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
   const courseCode = req.params.course_code;
   const { courseName, description, schedule, room, capacity, credits, fee } = req.body;
 
-  if (!courseName || !description || !schedule || !room || capacity || credits || !fee) {
+  if (!courseName || !description || !schedule || !room || !capacity || !credits || !fee) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
