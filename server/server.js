@@ -632,9 +632,9 @@ app.post('/admin/courses', authenticateToken, async (req, res) => {
 
 app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
   const courseCode = req.params.course_code;
-  const { courseName, description, schedule, room, fee } = req.body;
+  const { courseName, description, schedule, room, capacity, credits, fee } = req.body;
 
-  if (!courseName || !description || !schedule || !room || !fee) {
+  if (!courseName || !description || !schedule || !room || capacity || credits || !fee) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -645,7 +645,7 @@ app.put('/admin/courses/:course_code', authenticateToken, async (req, res) => {
       const query = `
       UPDATE courses
       SET course_name = $1, description = $2, schedule = $3, room = $4, fee = $5
-      WHERE course_code = $6 RETURNING course_code, course_name, description, schedule, room, fee
+      WHERE course_code = $6 RETURNING course_code, course_name, description, schedule, room, capacity, credits fee
     `;
       const values = [courseName, description, schedule, room, fee, courseCode];
       const result = await client.query(query, values);

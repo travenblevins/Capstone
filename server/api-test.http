@@ -215,10 +215,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test editing a course
 PUT https://capstone-gmm5.onrender.com/admin/courses/CSCI-10022
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMxMTQwMCwiZXhwIjoxNzQyMzE1MDAwfQ.c8ek7DEVkmfSwfB_0wzk-q8GyUt3rkPluv8ooDcmAO0
 
 {
-    "courseCode": "CSCI-10022",
+    "courseCode": "CSCI-1002",
     "courseName": "Computer Analysis",
     "description": "This course covers the fundamentals of computer architecture.",
     "schedule": "TTh 9:00-10:30",
