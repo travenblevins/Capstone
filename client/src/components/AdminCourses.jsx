@@ -21,7 +21,7 @@ const AdminCourses = () => {
   const fetchCourses = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:3001/admin", {
+      const response = await fetch("https://capstone-gmm5.onrender.com/admin", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -42,8 +42,8 @@ const AdminCourses = () => {
 
     const method = editingCourse ? "PUT" : "POST";
     const url = editingCourse
-      ? `http://localhost:3001/admin/courses/${editingCourse.courseCode}`
-      : "http://localhost:3001/admin/courses";
+      ? `https://capstone-gmm5.onrender.com/admin/courses/${editingCourse.courseCode}`
+      : "https://capstone-gmm5.onrender.com/admin/courses";
 
     try {
       const response = await fetch(url, {
@@ -79,10 +79,13 @@ const AdminCourses = () => {
   const handleDeleteCourse = async (courseCode) => {
     const token = localStorage.getItem("token");
     try {
-      await fetch(`http://localhost:3001/admin/courses/${courseCode}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await fetch(
+        `https://capstone-gmm5.onrender.com/admin/courses/${courseCode}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchCourses();
     } catch (error) {
       console.error("Error deleting course", error);
