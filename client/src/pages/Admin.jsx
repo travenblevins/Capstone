@@ -31,6 +31,7 @@ const Admin = () => {
         const data = await response.json();
         setUsers(data.users || []);
         setCourses(data.courses || []);
+        console.log(data);
       } else {
         console.error("Failed to fetch admin data");
       }
@@ -66,7 +67,8 @@ const Admin = () => {
               key={course.id}
               className="flex flex-col justify-between border p-4 rounded-lg shadow-md bg-white"
             >
-              {course.name} {course.description}
+              {course.course_name} {course.description} {course.credits}
+              {course.fee} {course.room}
               <button onClick={() => setSelectedCourse(course)}>
                 Edit course
               </button>
