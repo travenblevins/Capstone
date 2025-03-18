@@ -55,12 +55,12 @@ Authorization: Bearer
 ### Test admin page
 GET https://capstone-gmm5.onrender.com/admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMxMDQ0MywiZXhwIjoxNzQyMzE0MDQzfQ.1rXbSSu-RvJN9ZoXsYz3vyoUjeseNOa7yWsGUPA18w8
+Authorization: Bearer 
 
 ### Test deleting user
 DELETE https://capstone-gmm5.onrender.com/admin/users/24
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer
 
 ### Test admin creating a user
 POST https://capstone-gmm5.onrender.com/admin/users
@@ -76,14 +76,14 @@ Authorization: Bearer
 }
 
 ### Test admin editing a user
-PUT https://capstone-gmm5.onrender.com/admin/users/24
+PUT https://capstone-gmm5.onrender.com/admin/users/21
 Content-Type: application/json
 Authorization: Bearer 
 
 {
-    "firstName": "Michael",
-    "lastName": "Scotty",
-    "email": "michael@gmail.com",
+    "firstName": "Bob",
+    "lastName": "Smith",
+    "email": "bob@gmail.com",
     "password": "123456",
     "admin": "no"
 }
@@ -98,20 +98,20 @@ Content-Type: application/json
 }
 
 ### Test user updating profile
-PUT https://capstone-gmm5.onrender.com/profile
+PUT https://capstone-gmm5.onrender.com/profile/edit
 Content-Type: application/json
 Authorization: Bearer 
 
 {
-    "firstName": "Michael",
-    "lastName": "Scott",
-    "email": "michael1@gmail.com"
+    "firstName": "Bobby",
+    "lastName": "Smith",
+    "email": "bob@gmail.com"
 }
 
 ### Test creating a course
 POST https://capstone-gmm5.onrender.com/admin/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer
 
 {
     "courseCode": "BIO-1011",
@@ -127,7 +127,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test editing
 PUT https://capstone-gmm5.onrender.com/admin/courses/BIO-101
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer 
 
 {
     "courseCode": "BIO-101",
@@ -143,7 +143,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test deleting a course
 DELETE https://capstone-gmm5.onrender.com/admin/courses/BIO-101
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MTg4MDg1MywiZXhwIjoxNzQxODg0NDUzfQ.LBGGtheSAca16tJwljeMxlqs4Bz34qzdfFc1-EtT1ow
+Authorization: Bearer 
 
 ### Test enrolling a user
 POST https://capstone-gmm5.onrender.com/admin/users/21/CSCI-1001/enroll
@@ -158,7 +158,7 @@ Authorization: Bearer
 ### Test searching for a user
 GET https://capstone-gmm5.onrender.com/admin/search/users/Michael/Scott
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwNjEyNiwiZXhwIjoxNzQyMzA5NzI2fQ.uRd9w9aIeudzTHn5kz7udJ3o6dcVcIKJTuBHq7PjQBQ
+Authorization: Bearer 
 
 ### Test searching for a course
 GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
@@ -199,7 +199,7 @@ Authorization: Bearer
 ### Test creating a course
 POST https://capstone-gmm5.onrender.com/admin/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMwODg1NSwiZXhwIjoxNzQyMzEyNDU1fQ.VlizpOeEl8DbeYdhjmQ-0gwfXEbCPtOea8hBhocbFes
+Authorization: Bearer 
 
 {
     "courseCode": "CSCI-10022",
@@ -215,7 +215,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlb
 ### Test editing a course
 PUT https://capstone-gmm5.onrender.com/admin/courses/CSCI-10022
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMxMTQwMCwiZXhwIjoxNzQyMzE1MDAwfQ.c8ek7DEVkmfSwfB_0wzk-q8GyUt3rkPluv8ooDcmAO0
+Authorization: Bearer 
 
 {
     "courseCode": "CSCI-1002",
@@ -251,7 +251,7 @@ Authorization: Bearer
 ### Test searching for a course
 GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTc0MjMxMDE2MywiZXhwIjoxNzQyMzEzNzYzfQ.sR1gDS2xSiWgRWTRICs3M_TQUniWdYqz8FxVFCVe4qE
+Authorization: Bearer 
 
 
 

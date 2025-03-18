@@ -259,7 +259,7 @@ app.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
-app.put('/profile', authenticateToken, async (req, res) => {
+app.put('/profile/edit', authenticateToken, async (req, res) => {
   const userId = req.userId; // Get user ID from the token
   const { firstName, lastName, email } = req.body;
   try {
