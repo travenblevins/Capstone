@@ -3,7 +3,6 @@ import Dashboard from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import CreateUserForm from "../components/CreateUserForm";
 import UpdateUserForm from "../components/UpdateUserForm";
-import AdminCourses from "../components/AdminCourses";
 import UpdateCourseForm from "../components/UpdateCourseForm";
 import CreateCourseForm from "../components/CreateCourseForm";
 
