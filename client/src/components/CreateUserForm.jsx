@@ -13,7 +13,7 @@ const CreateUserForm = () => {
     const newUser = { firstName, lastName, email, password, admin };
 
     try {
-      await fetch("http://localhost:3001/admin/users", {
+      await fetch("https://capstone-gmm5.onrender.com/admin/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

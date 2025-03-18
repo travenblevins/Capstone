@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import CreateUserForm from "../components/CreateUserForm";
 import UpdateUserForm from "../components/UpdateUserForm";
 import AdminCourses from "../components/AdminCourses";
+import UpdateCourseForm from "../components/UpdateCourseForm";
 
 const Admin = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [courses, setCourses] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
     fetchAdminData();
@@ -54,7 +56,34 @@ const Admin = () => {
     <Dashboard>
       <h1>Admin Dashboard</h1>
 
-      {/* Manage Users */}
+      {/* Manage Courses */}
+      <h2>Courses</h2>
+      {/* <AdminCourses courses={courses} onCoursesUpdated={fetchAdminData} /> */}
+      <div>
+        <ul>
+          {courses.map((course) => (
+            <li
+              key={course.id}
+              className="flex flex-col justify-between border p-4 rounded-lg shadow-md bg-white"
+            >
+              {course.name} {course.description}
+              <button onClick={() => setSelectedCourse(course)}>
+                Edit course
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {selectedCourse && (
+        <UpdateCourseForm
+          course={selectedCourse}
+          onUpdateSuccess={() => {
+            fetchAdminData();
+            setSelectedCourse(null);
+          }}
+        />
+      )}
+
       <h2>Users</h2>
       <CreateUserForm onUserCreated={fetchAdminData} />
       <div>
@@ -71,8 +100,6 @@ const Admin = () => {
           ))}
         </ul>
       </div>
-
-      {/* Show Update Form When a User is Selected */}
       {selectedUser && (
         <UpdateUserForm
           user={selectedUser}
@@ -82,10 +109,6 @@ const Admin = () => {
           }}
         />
       )}
-
-      {/* Manage Courses */}
-      <h2>Courses</h2>
-      <AdminCourses courses={courses} onCoursesUpdated={fetchAdminData} />
     </Dashboard>
   );
 };
