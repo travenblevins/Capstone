@@ -222,6 +222,14 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.get('/login', (req, res) => {
+  res.redirect('/')
+});
+
+app.get('/signup', (req, res) => {
+  res.redirect('/')
+});
+
 app.get('/profile', authenticateToken, async (req, res) => {
   const userId = req.userId; // Get user ID from the token
 
