@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../components/Sidebar";
 import CourseCard from "../components/CourseCard";
@@ -15,13 +14,15 @@ const Courses = () => {
       return;
     }
     try {
-      const response = await fetch("https://capstone-gmm5.onrender.com/courses", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        "https://capstone-gmm5.onrender.com/courses",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setCourses(data.courses);
-        console.log(data);
       } else {
         console.error("Failed to fetch courses");
       }
@@ -35,7 +36,6 @@ const Courses = () => {
   }, [navigate]);
 
   const enrollInCourse = async (course_name) => {
-    console.log("Attempting to enroll in:", course_name);
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -59,9 +59,7 @@ const Courses = () => {
 
       if (response.ok) {
         console.log("Enrolled successfully!");
-        fetchCourses(); // Refresh the courses list
-
-        // Update state to reflect enrollment
+        fetchCourses();
         setCourses((prevCourses) =>
           prevCourses.map((course) =>
             course.name === course_name
@@ -78,7 +76,6 @@ const Courses = () => {
   };
 
   const unEnrollInCourse = async (course_name) => {
-    console.log("Attempting to unenroll in:", course_name);
     const token = localStorage.getItem("token");
 
     if (!token) {

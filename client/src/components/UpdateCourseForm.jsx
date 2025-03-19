@@ -2,7 +2,6 @@ import { useState } from "react";
 
 const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
-    courseCode: course.course_id,
     courseName: course.course_name,
     description: course.description,
     schedule: course.schedule,
@@ -44,94 +43,80 @@ const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-4 border rounded-lg bg-white shadow-md"
-    >
-      <h3>Update course</h3>
-      <label className="block mb-2">
-        Name:
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-center">Update Course</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          required
           type="text"
           name="courseName"
+          placeholder="Course Name"
           value={formData.courseName}
           onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      </label>
-      <label className="block mb-2">
-        Description:
-        <input
+          className="w-full p-2 border rounded-lg"
           required
-          type="text"
+        />
+        <textarea
           name="description"
+          placeholder="Description"
           value={formData.description}
           onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      </label>
-      <label className="block mb-2">
-        Schedule:
-        <input
+          className="w-full p-2 border rounded-lg"
           required
+          rows={7}
+        />
+        <input
           type="text"
           name="schedule"
+          placeholder="Schedule"
           value={formData.schedule}
           onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      </label>
-      <label className="block mb-2">
-        Room:
-        <input
+          className="w-full p-2 border rounded-lg"
           required
+        />
+        <input
           type="text"
           name="room"
+          placeholder="Room"
           value={formData.room}
           onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      </label>
-      <label className="block mb-2">
-        Capacity:
-        <input
+          className="w-full p-2 border rounded-lg"
           required
-          type="text"
+        />
+        <input
+          type="number"
           name="capacity"
+          placeholder="Capacity"
           value={formData.capacity}
           onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      </label>
-      <label className="block mb-2">
-        Credits:
-        <input
+          className="w-full p-2 border rounded-lg"
           required
-          type="text"
+        />
+        <input
+          type="number"
           name="credits"
+          placeholder="Credits"
           value={formData.credits}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="w-full p-2 border rounded-lg"
+          required
         />
-      </label>
-      <label className="block mb-2">
-        Fee:
         <input
-          type="text"
+          type="number"
           name="fee"
+          placeholder="Fee"
           value={formData.fee}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="w-full p-2 border rounded-lg"
+          required
         />
-      </label>
-      <button
-        type="submit"
-        className="bg-blue-500 text-white p-2 rounded-lg mt-2"
-      >
-        Update Course
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+        >
+          Update Course
+        </button>
+      </form>
+    </div>
   );
 };
 

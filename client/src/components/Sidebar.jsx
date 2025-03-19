@@ -24,11 +24,11 @@ const Navbar = ({ toggleSidebar }) => {
                 />
               </svg>
             </button>
-            <a href="/" className="flex ms-2 md:me-24">
+            <a to="/" className="flex ms-2 md:me-24">
               <img
-                src="https://flowbite.com/docs/images/logo.svg"
+                src="/src/assets/images/logo.webp"
                 className="h-8 me-3"
-                alt="FlowBite Logo"
+                alt="Logo"
               />
               <span className="self-center text-xl font-semibold sm:text-2xl dark:text-white">
                 Dashboard
@@ -42,36 +42,25 @@ const Navbar = ({ toggleSidebar }) => {
             >
               <img
                 className="w-8 h-8 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                src="/src/assets/images/userImg.webp"
                 alt="user"
               />
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-gray-700 rounded-md shadow-md">
                 <div className="px-4 py-3">
-                  <p className="text-sm text-gray-900 dark:text-white">
-                    Neil Sims
-                  </p>
                   <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
                     {user.email}
                   </p>
                 </div>
                 <ul className="py-1">
                   <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/profile"
                       className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       Settings
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a
@@ -122,14 +111,6 @@ const Sidebar = ({ isOpen }) => {
             className="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <span className="ms-3">Profile</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/courses"
-            className="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <span className="ms-3">Courses</span>
           </Link>
         </li>
         <li>
