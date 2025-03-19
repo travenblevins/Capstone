@@ -33,6 +33,7 @@ const Courses = () => {
 
   useEffect(() => {
     fetchCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   const enrollInCourse = async (course_name) => {

@@ -12,10 +12,11 @@ const Admin = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [activeTab, setActiveTab] = useState("courses"); // Default to courses
+  const [activeTab, setActiveTab] = useState("courses");
 
   useEffect(() => {
     fetchAdminData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchAdminData = async () => {
