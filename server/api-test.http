@@ -1,5 +1,5 @@
 ### Test User Signup
-POST https://capstone-gmm5.onrender.com/signup
+POST http://localhost:3001/signup
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### Test User Login
-POST https://capstone-gmm5.onrender.com/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Test admin login
-POST https://capstone-gmm5.onrender.com/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -28,42 +28,42 @@ Content-Type: application/json
 }
 
 ### Test User Profile
-GET https://capstone-gmm5.onrender.com/profile
+GET http://localhost:3001/profile
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test Course Page
-GET https://capstone-gmm5.onrender.com/courses
+GET http://localhost:3001/courses
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test Getting a Course
-GET https://capstone-gmm5.onrender.com/courses/Data Structures
+GET http://localhost:3001/courses/Data Structures
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test Enrolling in a Course
-POST https://capstone-gmm5.onrender.com/courses/Data Structures/enroll
+POST http://localhost:3001/courses/Data Structures/enroll
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test Unenrolling in a Course
-POST https://capstone-gmm5.onrender.com/courses/Data Structures/unenroll
+POST http://localhost:3001/courses/Data Structures/unenroll
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test admin page
-GET https://capstone-gmm5.onrender.com/admin
+GET http://localhost:3001/admin
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test deleting user
-DELETE https://capstone-gmm5.onrender.com/admin/users/24
+DELETE http://localhost:3001/admin/users/24
 Content-Type: application/json
 Authorization: Bearer
 
 ### Test admin creating a user
-POST https://capstone-gmm5.onrender.com/admin/users
+POST http://localhost:3001/admin/users
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -76,7 +76,7 @@ Authorization: Bearer
 }
 
 ### Test admin editing a user
-PUT https://capstone-gmm5.onrender.com/admin/users/21
+PUT http://localhost:3001/admin/users/21
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -89,7 +89,7 @@ Authorization: Bearer
 }
 
 ### Test User Login
-POST https://capstone-gmm5.onrender.com/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -98,7 +98,7 @@ Content-Type: application/json
 }
 
 ### Test user updating profile
-PUT https://capstone-gmm5.onrender.com/profile/edit
+PUT http://localhost:3001/profile/edit
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -109,7 +109,7 @@ Authorization: Bearer
 }
 
 ### Test creating a course
-POST https://capstone-gmm5.onrender.com/admin/courses
+POST http://localhost:3001/admin/courses
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -124,7 +124,7 @@ Authorization: Bearer
 }
 
 ### Test editing
-PUT https://capstone-gmm5.onrender.com/admin/courses/BIO-101
+PUT http://localhost:3001/admin/courses/BIO-101
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -140,37 +140,37 @@ Authorization: Bearer
 }
 
 ### Test deleting a course
-DELETE https://capstone-gmm5.onrender.com/admin/courses/BIO-101
+DELETE http://localhost:3001/admin/courses/BIO-101
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test enrolling a user
-POST https://capstone-gmm5.onrender.com/admin/users/21/CSCI-1001/enroll
+POST http://localhost:3001/admin/users/21/CSCI-1001/enroll
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test unenrolling a user
-DELETE https://capstone-gmm5.onrender.com/admin/users/20/CSCI-1001/unenroll
+DELETE http://localhost:3001/admin/users/20/CSCI-1001/unenroll
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test searching for a user
-GET https://capstone-gmm5.onrender.com/admin/search/users/Michael/Scott
+GET http://localhost:3001/admin/search/users/Michael/Scott
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test searching for a course
-GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
+GET http://localhost:3001/admin/search/courses/Computer Architecture
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test deleting a user
-DELETE https://capstone-gmm5.onrender.com/admin/users/6
+DELETE http://localhost:3001/admin/users/6
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test creating a user
-POST https://capstone-gmm5.onrender.com/admin/users
+POST http://localhost:3001/admin/users
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -183,7 +183,7 @@ Authorization: Bearer
 }
 
 ### Test editing a user
-PUT https://capstone-gmm5.onrender.com/admin/users/20
+PUT http://localhost:3001/admin/users/20
 Content-Type: application/json
 Authorization: Bearer
 
@@ -196,7 +196,7 @@ Authorization: Bearer
 }
 
 ### Test creating a course
-POST https://capstone-gmm5.onrender.com/admin/courses
+POST http://localhost:3001/admin/courses
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -211,7 +211,7 @@ Authorization: Bearer
 }
 
 ### Test editing a course
-PUT https://capstone-gmm5.onrender.com/admin/courses/CSCI-10022
+PUT http://localhost:3001/admin/courses/CSCI-10022
 Content-Type: application/json
 Authorization: Bearer 
 
@@ -227,30 +227,26 @@ Authorization: Bearer
 }
 
 ### Test deleting a course
-DELETE https://capstone-gmm5.onrender.com/admin/courses/BIO-1011
+DELETE http://localhost:3001/admin/courses/BIO-1011
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test enrolling a user
-POST https://capstone-gmm5.onrender.com/admin/users/21/BIO-101/enroll
+POST http://localhost:3001/admin/users/21/BIO-101/enroll
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test unenrolling a user
-DELETE https://capstone-gmm5.onrender.com/admin/users/21/BIO-101/unenroll
+DELETE http://localhost:3001/admin/users/21/BIO-101/unenroll
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test searching for a user
-GET https://capstone-gmm5.onrender.com/admin/search/users/Michael/Scott
+GET http://localhost:3001/admin/search/users/Michael/Scott
 Content-Type: application/json
 Authorization: Bearer 
 
 ### Test searching for a course
-GET https://capstone-gmm5.onrender.com/admin/search/courses/Computer Architecture
+GET http://localhost:3001/admin/search/courses/Computer Architecture
 Content-Type: application/json
-Authorization: Bearer 
-
-
-
-
+Authorization: Bearer
