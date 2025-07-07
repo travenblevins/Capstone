@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_BASE_URL from "../config/api";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("https://capstone-gmm5.onrender.com/signup", {
+      const response = await fetch(`${API_BASE_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
