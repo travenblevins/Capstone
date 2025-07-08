@@ -14,9 +14,14 @@ npm install
 cd ..
 
 # Install client dependencies and build
-echo "⚛️ Building React client..."
+echo "⚛️ Installing client dependencies..."
 cd client
-npm install
+
+# Install all dependencies including devDependencies (needed for vite)
+npm install --include=dev
+
+echo "🏗️ Building React client..."
+# Use npm run build to ensure proper environment
 npm run build
 
 # Verify build was successful
