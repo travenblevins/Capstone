@@ -14,44 +14,31 @@ const secretKey = process.env.SECRET_KEY || "secret_key";
 const cors = require("cors");
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "public")));
+
+// Manual CORS headers as fallback
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 app.use(express.json());
 
-// Configure CORS for production
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    // In production, allow all origins temporarily to fix the immediate issue
-    if (process.env.NODE_ENV === 'production') {
-      return callback(null, true);
-    }
-    
-    const allowedOrigins = [
-      'http://localhost:5173', // Local development
-      'http://localhost:3000', // Local development  
-      'http://localhost:3001', // Local development
-      'https://capstone-1-xj60.onrender.com', // Your frontend deployment
-      'https://capstone-backend-render.onrender.com', // Your backend deployment (for self-requests)
-      'https://capstone-gmm5.web.app', // Firebase hosting (if used)
-      'https://capstone-gmm5.firebaseapp.com' // Firebase hosting (if used)
-    ];
-    
-    // Check if origin is in allowed list
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    
-    console.log('CORS blocked origin:', origin);
-    callback(new Error('Not allowed by CORS'));
-  },
+// Simple CORS configuration that allows all origins
+app.use(cors({
+  origin: true, // Allow all origins
   credentials: true,
-  optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
-};
-
-app.use(cors(corsOptions));
+}));
 
 const PORT = process.env.PORT || 3001;
 
