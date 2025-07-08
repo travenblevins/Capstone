@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../config/api";
 
 const UpdateProfileForm = ({ user, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const UpdateProfileForm = ({ user, onUpdateSuccess }) => {
 
     try {
       const response = await fetch(
-        "https://capstone-gmm5.onrender.com/profile/edit",
+        `${API_BASE_URL}/profile/edit`,
         {
           method: "PUT",
           headers: {

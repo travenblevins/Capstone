@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd server && npm i && cd ../client && npm i && npm run build",
+    "build": "./build.sh",
     "start": "node server/server.js"
   },
   "keywords": [],
@@ -15,12 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.9",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "morgan": "^1.10.0",
-    "pg": "^8.13.3",
-    "tailwindcss": "^4.0.9",
-    "winston": "^3.17.0"
+    "dotenv": "^17.1.0",
+    "pg": "^8.16.3"
   }
 }

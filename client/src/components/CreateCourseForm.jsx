@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../config/api";
 
 const CreateCourseForm = ({ onCourseCreated }) => {
   const [courseName, setCourseName] = useState("");
@@ -24,7 +25,7 @@ const CreateCourseForm = ({ onCourseCreated }) => {
 
     try {
       const response = await fetch(
-        "https://capstone-gmm5.onrender.com/admin/courses",
+        `${API_BASE_URL}/admin/courses`,
         {
           method: "POST",
           headers: {

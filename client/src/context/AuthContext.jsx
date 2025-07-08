@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useMemo } from "react";
+import API_BASE_URL from "../config/api";
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch("https://capstone-gmm5.onrender.com/login", {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

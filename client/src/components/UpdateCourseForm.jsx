@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../config/api";
 
 const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ const UpdateCourseForm = ({ course, onUpdateSuccess }) => {
 
     try {
       const response = await fetch(
-        `https://capstone-gmm5.onrender.com/admin/courses/${course.course_id}`,
+        `${API_BASE_URL}/admin/courses/${course.course_id}`,
         {
           method: "PUT",
           headers: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../components/Sidebar";
 import UpdateProfileForm from "../components/UpdateProfileForm";
+import API_BASE_URL from "../config/api";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -23,7 +24,7 @@ const Profile = () => {
       }
       try {
         const response = await fetch(
-          "https://capstone-gmm5.onrender.com/profile",
+          `${API_BASE_URL}/profile`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

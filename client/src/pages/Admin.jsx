@@ -5,6 +5,7 @@ import CreateUserForm from "../components/CreateUserForm";
 import UpdateUserForm from "../components/UpdateUserForm";
 import UpdateCourseForm from "../components/UpdateCourseForm";
 import CreateCourseForm from "../components/CreateCourseForm";
+import { API_BASE_URL } from "../config/api";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Admin = () => {
       return;
     }
     try {
-      const response = await fetch("https://capstone-gmm5.onrender.com/admin", {
+      const response = await fetch(`${API_BASE_URL}/admin`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -45,7 +46,7 @@ const Admin = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     const token = localStorage.getItem("token");
     try {
-      await fetch(`https://capstone-gmm5.onrender.com/admin/users/${userId}`, {
+      await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -60,7 +61,7 @@ const Admin = () => {
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
-        `https://capstone-gmm5.onrender.com/admin/courses/${courseId}`,
+        `${API_BASE_URL}/admin/courses/${courseId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },

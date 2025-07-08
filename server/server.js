@@ -9,11 +9,11 @@ const app = express();
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const { Client } = require("pg"); // Import the pg module
-require("dotenv").config(); // Load environment variables from .env file
+require("dotenv").config({ path: path.join(__dirname, '../.env') }); // Load environment variables from root .env file
 const secretKey = process.env.SECRET_KEY || "secret_key";
 const cors = require("cors");
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, "../client/dist")));
+app.use(express.static(path.resolve(__dirname, "public")));
 app.use(express.json());
 app.use(cors());
 
@@ -67,7 +67,7 @@ app.use((err, req, res, next) => {
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
-  ssl: false // Set to true if using SSL, false for local development
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 
@@ -774,3 +774,8 @@ app.get("/admin/search/courses/:course_name", authenticateToken, async (req, res
   } catch (err) {
     console.error("Error fetching data", err.stack);
   }});
+
+// Catch-all handler: send back React's index.html file for client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});

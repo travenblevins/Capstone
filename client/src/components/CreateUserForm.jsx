@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_BASE_URL } from "../config/api";
 
 const CreateUserForm = ({ onUserCreated }) => {
   const [firstName, setFirstName] = useState("");
@@ -13,7 +14,7 @@ const CreateUserForm = ({ onUserCreated }) => {
     const newUser = { firstName, lastName, email, password, admin };
 
     try {
-      await fetch("https://capstone-gmm5.onrender.com/admin/users", {
+      await fetch(`${API_BASE_URL}/admin/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

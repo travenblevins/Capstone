@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../components/Sidebar";
 import CourseCard from "../components/CourseCard";
+import { API_BASE_URL } from "../config/api";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -15,7 +16,7 @@ const Courses = () => {
     }
     try {
       const response = await fetch(
-        "https://capstone-gmm5.onrender.com/courses",
+        `${API_BASE_URL}/courses`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -46,7 +47,7 @@ const Courses = () => {
 
     try {
       const response = await fetch(
-        `https://capstone-gmm5.onrender.com/courses/${encodeURIComponent(
+        `${API_BASE_URL}/courses/${encodeURIComponent(
           course_name
         )}/enroll`,
         {
@@ -86,7 +87,7 @@ const Courses = () => {
 
     try {
       const response = await fetch(
-        `https://capstone-gmm5.onrender.com/courses/${encodeURIComponent(
+        `${API_BASE_URL}/courses/${encodeURIComponent(
           course_name
         )}/unenroll`,
         {
