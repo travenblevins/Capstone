@@ -15,7 +15,39 @@ const cors = require("cors");
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "public")));
 app.use(express.json());
-app.use(cors());
+
+// Configure CORS for production
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:5173', // Local development
+      'http://localhost:3000', // Local development
+      'https://capstone-1-xj60.onrender.com', // Your frontend deployment
+      'https://capstone-gmm5.web.app', // Firebase hosting (if used)
+      'https://capstone-gmm5.firebaseapp.com' // Firebase hosting (if used)
+    ];
+    
+    // In production, also allow any .onrender.com domain for flexibility
+    if (process.env.NODE_ENV === 'production' && origin.includes('.onrender.com')) {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3001;
 
