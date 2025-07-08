@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../components/Sidebar";
 import UpdateProfileForm from "../components/UpdateProfileForm";
-import API_BASE_URL from "../config/api";
+import { API_BASE_URL } from "../config/api";
 
 const Profile = () => {
   const [user, setUser] = useState(null);

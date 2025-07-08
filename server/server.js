@@ -775,7 +775,27 @@ app.get("/admin/search/courses/:course_name", authenticateToken, async (req, res
     console.error("Error fetching data", err.stack);
   }});
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ 
+    status: "OK", 
+    message: "Server is running",
+    staticFiles: require('fs').existsSync(path.resolve(__dirname, "public", "index.html"))
+  });
+});
+
 // Catch-all handler: send back React's index.html file for client-side routing
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+  const indexPath = path.resolve(__dirname, "public", "index.html");
+  
+  // Check if the file exists before trying to send it
+  if (require('fs').existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).json({ 
+      error: "Static files not found", 
+      message: "The React app build files are missing. Please check the build process.",
+      looking_for: indexPath
+    });
+  }
 });
