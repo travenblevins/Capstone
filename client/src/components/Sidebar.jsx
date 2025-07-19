@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import logo from "../assets/images/logo.webp";
+import userImg from "../assets/images/userImg.webp";
 
 const Navbar = ({ toggleSidebar }) => {
   const { user, logout } = useContext(AuthContext);
@@ -26,7 +28,7 @@ const Navbar = ({ toggleSidebar }) => {
             </button>
             <a to="/" className="flex ms-2 md:me-24">
               <img
-                src="/src/assets/images/logo.webp"
+                src={logo}
                 className="h-8 me-3"
                 alt="Logo"
               />
@@ -42,7 +44,7 @@ const Navbar = ({ toggleSidebar }) => {
             >
               <img
                 className="w-8 h-8 rounded-full"
-                src="/src/assets/images/userImg.webp"
+                src={userImg}
                 alt="user"
               />
             </button>
