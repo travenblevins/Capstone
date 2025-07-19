@@ -17,7 +17,7 @@ const Navbar = ({ toggleSidebar }) => {
     const newDarkMode = !isDark;
     setIsDark(newDarkMode);
     localStorage.setItem('darkMode', newDarkMode.toString());
-    
+
     if (newDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -71,7 +71,7 @@ const Navbar = ({ toggleSidebar }) => {
                 </svg>
               )}
             </button>
-            
+
             {/* User dropdown */}
             <div className="relative">
               <button
@@ -84,34 +84,35 @@ const Navbar = ({ toggleSidebar }) => {
                   alt="user"
                 />
               </button>
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-gray-700 rounded-md shadow-md">
-                <div className="px-4 py-3">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
-                    {user.email}
-                  </p>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-gray-700 rounded-md shadow-md">
+                  <div className="px-4 py-3">
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
+                      {user.email}
+                    </p>
+                  </div>
+                  <ul className="py-1">
+                    <li>
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >
+                        Settings
+                      </Link>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        onClick={logout}
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >
+                        Sign out
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                <ul className="py-1">
-                  <li>
-                    <Link
-                      to="/profile"
-                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      Settings
-                    </Link>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      onClick={logout}
-                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -122,9 +123,8 @@ const Navbar = ({ toggleSidebar }) => {
 const Sidebar = ({ isOpen }) => {
   return (
     <aside
-      className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } sm:translate-x-0 bg-white dark:bg-gray-800`}
+      className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0 bg-white dark:bg-gray-800`}
     >
       <ul className="space-y-2 font-medium px-3">
         <li>
