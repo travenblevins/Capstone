@@ -7,7 +7,7 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
     lastName: user.last_name,
     email: user.email,
     password: "",
-    admin: user.admin,
+    admin: user.admin ? "yes" : "no",
   });
 
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/admin/users/${user.id}`,
+        `${API_BASE_URL}/admin/users/${user.user_id || user.id}`,
         {
           method: "PUT",
           headers: {
@@ -93,14 +93,15 @@ const UpdateUserForm = ({ user, onUpdateSuccess }) => {
       </label>
       <label className="block mb-2">
         Admin:
-        <input
-          type="checkbox"
+        <select
           name="admin"
-          checked={formData.admin}
-          onChange={(e) =>
-            setFormData({ ...formData, admin: e.target.checked })
-          }
-        />
+          value={formData.admin}
+          onChange={handleChange}
+          className="border p-2 w-full"
+        >
+          <option value="no">User</option>
+          <option value="yes">Admin</option>
+        </select>
       </label>
       <button
         type="submit"

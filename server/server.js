@@ -125,7 +125,7 @@ app.post("/signup", async (req, res) => {
     // Insert the user into the database, ensuring field names match the DB column names
     const query = `
       INSERT INTO users (first_name, last_name, email, password)
-      VALUES ($1, $2, $3, $4) RETURNING id, first_name, last_name, email
+      VALUES ($1, $2, $3, $4) RETURNING user_id, first_name, last_name, email
     `;
     const values = [firstName, lastName, email, hashedPassword];
 
@@ -214,14 +214,14 @@ app.post('/login', async (req, res) => {
     const admin = user.admin;
     console.log("Admin:", admin);
 
-    let isAdmin
+    let isAdmin = false;
 
-    if (user.admin === 'yes') {
+    if (user.admin === true || user.admin === 'yes') {
       isAdmin = true;
     }
 
     const token = jwt.sign(
-      { userId: user.id, email: user.email, admin: isAdmin },  // Ensure `admin` is always included
+      { userId: user.user_id, email: user.email, admin: isAdmin },  // Ensure `admin` is always included
       secretKey,
       { expiresIn: "1h" } // Token expires in 1 hour
     );
@@ -242,7 +242,7 @@ app.get('/profile', authenticateToken, async (req, res) => {
 
   try {
     // Fetch user details
-    const userQuery = "SELECT id, first_name, last_name, email FROM users WHERE id = $1";
+    const userQuery = "SELECT user_id, first_name, last_name, email FROM users WHERE user_id = $1";
     const userResult = await client.query(userQuery, [userId]);
 
     if (userResult.rows.length === 0) {
@@ -277,7 +277,7 @@ app.put('/profile/edit', authenticateToken, async (req, res) => {
     const query = `
       UPDATE users
       SET first_name = $1, last_name = $2, email = $3
-      WHERE id = $4 RETURNING id, first_name, last_name, email
+      WHERE user_id = $4 RETURNING user_id, first_name, last_name, email
     `;
     const values = [firstName, lastName, email, userId];
     const result = await client.query(query, values);
@@ -294,7 +294,7 @@ app.put('/profile/edit', authenticateToken, async (req, res) => {
 app.get("/courses", authenticateToken, async (req, res) => {
   try {
     const userId = req.userId; // Get user ID from the token
-    
+
     // Fetch all courses
     const coursesQuery = "SELECT * FROM courses";
     const coursesResult = await client.query(coursesQuery);
@@ -459,7 +459,7 @@ app.get("/admin", authenticateToken, async (req, res) => {
         }));
 
         const formattedUsers = users.rows.map(user => ({
-          id: user.id,
+          id: user.user_id,
           first_name: user.first_name,
           last_name: user.last_name,
           email: user.email,
@@ -503,7 +503,7 @@ app.delete('/admin/users/:user_id', authenticateToken, async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
 
     if (decoded.admin === true) {
-      const query = "DELETE FROM users WHERE id = $1";
+      const query = "DELETE FROM users WHERE user_id = $1";
       await client.query(query, [userId]);
       res.json({ message: "User deleted successfully" });
     } else {
@@ -525,6 +525,7 @@ app.post('/admin/users', authenticateToken, async (req, res) => {
   }
 
   const hashedPassword = bcrypt.hashSync(password, 10);
+  const isAdmin = admin === 'yes' || admin === true;
 
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -532,9 +533,9 @@ app.post('/admin/users', authenticateToken, async (req, res) => {
     if (decoded.admin === true) {
       const query = `
       INSERT INTO users (first_name, last_name, email, password, admin)
-      VALUES ($1, $2, $3, $4, $5) RETURNING id, first_name, last_name, email, admin
+      VALUES ($1, $2, $3, $4, $5) RETURNING user_id, first_name, last_name, email, admin
     `;
-      const values = [firstName, lastName, email, hashedPassword, admin];
+      const values = [firstName, lastName, email, hashedPassword, isAdmin];
       const result = await client.query(query, values);
       const newUser = result.rows[0];
 
@@ -561,6 +562,7 @@ app.put('/admin/users/:user_id', authenticateToken, async (req, res) => {
   }
 
   const hashedPassword = bcrypt.hashSync(password, 10);
+  const isAdmin = admin === 'yes' || admin === true;
 
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -569,9 +571,9 @@ app.put('/admin/users/:user_id', authenticateToken, async (req, res) => {
       const query = `
       UPDATE users
       SET first_name = $1, last_name = $2, email = $3, password = $4, admin = $5
-      WHERE id = $6 RETURNING id, first_name, last_name, email, admin
+      WHERE user_id = $6 RETURNING user_id, first_name, last_name, email, admin
     `;
-      const values = [firstName, lastName, email, hashedPassword, admin, userId];
+      const values = [firstName, lastName, email, hashedPassword, isAdmin, userId];
       const result = await client.query(query, values);
       const updatedUser = result.rows[0];
 
@@ -772,7 +774,7 @@ app.get("/admin/search/courses/:course_name", authenticateToken, async (req, res
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, secretKey);
-    if(decoded.admin = true) {
+    if (decoded.admin = true) {
       const query = "SELECT * FROM courses WHERE LOWER(course_name) = LOWER($1)";
       const result = await client.query(query, [courseName]);
 
@@ -786,12 +788,13 @@ app.get("/admin/search/courses/:course_name", authenticateToken, async (req, res
     }
   } catch (err) {
     console.error("Error fetching data", err.stack);
-  }});
+  }
+});
 
 // Health check endpoint
 app.get("/health", (req, res) => {
-  res.json({ 
-    status: "OK", 
+  res.json({
+    status: "OK",
     message: "Server is running",
     staticFiles: require('fs').existsSync(path.resolve(__dirname, "public", "index.html"))
   });
@@ -800,13 +803,13 @@ app.get("/health", (req, res) => {
 // Catch-all handler: send back React's index.html file for client-side routing
 app.get("*", (req, res) => {
   const indexPath = path.resolve(__dirname, "public", "index.html");
-  
+
   // Check if the file exists before trying to send it
   if (require('fs').existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {
-    res.status(404).json({ 
-      error: "Static files not found", 
+    res.status(404).json({
+      error: "Static files not found",
       message: "The React app build files are missing. Please check the build process.",
       looking_for: indexPath
     });
